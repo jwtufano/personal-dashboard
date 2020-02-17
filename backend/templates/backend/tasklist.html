@@ -1,0 +1,12 @@
+{% load static %}
+
+{% if tasklist %}
+    {% for tasklist in tasklists %}
+        <p>{{ tasklist.list_name }}</p>
+        {% for task in tasklist.Tasks %}
+            {{ task }}
+        {% endfor %}
+    {% endfor %}
+{% else %}
+    <p>No tasklists are available.</p>
+{% endif %}

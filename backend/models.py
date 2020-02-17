@@ -26,5 +26,5 @@ class TaskList(models.Model):
 
 	#Delete a task from the tasklist
 	def delTask(self, name):
-		del self.Tasks.[name]
+		del self.Tasks[name]
 		return self.Tasks
