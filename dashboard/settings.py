@@ -196,8 +196,4 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-<<<<<<< HEAD
 django_heroku.settings(locals())
-=======
-django_heroku.settings(locals())
->>>>>>> origin/ahh
