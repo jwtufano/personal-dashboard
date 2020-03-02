@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
 
 class Task(models.Model):
 	task_name = models.CharField(max_length = 100)
-	due_date = models.DateTimeField('date due')
+	due_date = models.DateTimeField('date due', default=timezone.now() + timezone.timedelta(days=1))
 	task_description = models.CharField(max_length = 500)
 	subtasks = {}
 
