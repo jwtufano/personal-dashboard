@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
+if 'HEROKU' in os.environ:
+    import django_heroku
 import logging.config
 import config.config as CONFIG
 
@@ -195,5 +196,5 @@ ACCOUNT_USERNAME_REQUIRED = False
 # }
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-
-django_heroku.settings(locals())
+if 'HEROKU' in os.environ:
+    django_heroku.settings(locals())
