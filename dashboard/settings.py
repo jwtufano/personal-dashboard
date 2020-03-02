@@ -167,8 +167,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'collected-static/'
 
 AUTH_USER_MODEL = 'backend.CustomUser'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/backend/'
+LOGOUT_REDIRECT_URL = '/backend/'
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
