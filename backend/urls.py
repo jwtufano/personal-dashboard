@@ -1,8 +1,9 @@
 from django.urls import path
 
-from . import views
+from .views import HomePageView
+from .views import SignUpView
 
-app_name = 'backend'
 urlpatterns = [
-  path('', views.TaskListView.as_view(), name='tasklists'),
+    path('', HomePageView.as_view(), name='home'),
+    path('signup/', SignUpView.as_view(), name='signup'),
 ]
