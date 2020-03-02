@@ -6,6 +6,7 @@ env/
 .DS_STORE
 
 collected-static/
+staticfiles/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
