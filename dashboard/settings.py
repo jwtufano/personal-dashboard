@@ -196,5 +196,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 # }
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 if 'HEROKU' in os.environ:
     django_heroku.settings(locals())
