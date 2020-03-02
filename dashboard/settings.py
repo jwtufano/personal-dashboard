@@ -29,7 +29,7 @@ SECRET_KEY = CONFIG.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.0.0.1', 'localhost', 'pdnj.herokuapp.com', 'cs3240.singlesourceoftruth.xyz']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pdnj.herokuapp.com', 'cs3240.singlesourceoftruth.xyz']
 
 
 # Application definition
