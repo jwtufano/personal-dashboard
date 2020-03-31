@@ -1,6 +1,0 @@
-django==3.0.3
-gunicorn
-psycopg2
-django-allauth
-django-heroku
-django-crispy-forms
