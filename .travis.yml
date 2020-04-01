@@ -1,14 +1,11 @@
+services:
+- postgresql
 language: python
 python:
 - '3.8'
 install:
 - pip install -r requirements.txt
+before_script:
+- psql -c 'create database pdnj;' -U postgres
 script:
-- python manage.py test
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: ryaS4Lrk3YUIDi52ufD8dM8Qn6zNdYUDEBRnh6w+A33KgoJ0iQ09ebHdygMNNdwYGIw8gPC4sOxQeTri5u/1BmmuA0tGR/5Xuov/9ca0xG2NNcHJgDu2uuJ7MPEdXVdaQnXdIhfdo4PlnM8Vu0sO/q56FoEz5roOV56xZa2mnLyKSXAFEnGTt1bd+s/Bt9in6OaJn0GUDVlIh/jBe8+vpxiDKcoL0oEAol3P8FCp/AZTaLihJ4KaBMSTEmmlcqXtf1RXf4r98WC94OOJCKXqUri0IWQSVIectw/A3ID7S2+YgFrOg03s8ZlXMV692JeU+PWXar92pXEd6jgop81exo+JbGcOrtp6c+Fa8XYZVIiMI1/QY9EA16iJOKu+yo/iFkGL5kkBGdd6haLICkX6l/pUpUV8qgcLnm8FLv72Pf2nYBOd7jx0wy06ehIZa55pJjQ8mzYboR9FNlpC9BSfYwbD+nEvuY3Y1fmGcN+JanBAKAFvSeFkUUZOEJnFpBZXHddLE8vJCTBaSjclJRH7G2ll2NToKzr2HnEZE7VDvL4GpP6+HEYwm6Qiy0kR7PRKUfnaDZ51dDS/5QMOCKu4IROTCVbqQVx2oJS0BueCqkUTGTJbTgTDUhbAiQSnwJe85sB0IzgPTJbYv2VYXL//AZFxb/lzrYGf4+fkfdH7ox8=
-#   app: pdnj
-#   on:
-#     repo: uva-cs3240-s20/project-101-pdnj
+- ./config/test.sh

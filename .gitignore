@@ -7,7 +7,7 @@ env/
 
 collected-static/
 staticfiles/
-static/
+#static/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

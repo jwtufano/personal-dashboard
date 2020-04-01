@@ -1,4 +1,6 @@
-bind = "0.0.0.0:8000"
+import os
+if 'HEROKU' not in os.environ:
+    bind = "0.0.0.0:8000"
 loglevel = "INFO"
 workers = "3"
 reload = True
