@@ -17,7 +17,7 @@
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index_bs.html">Personal Dashboard</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Personal Dashboard</a>
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Main</div>
-                            <a class="nav-link" href="index_bs.html"
+                            <a class="nav-link" href="{% url 'home' %}"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard</a
                             >
@@ -72,6 +72,19 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card mb-4">
+                                    <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Current Weather</div>
+                                    <a class="weatherwidget-io" href="https://forecast7.com/en/38d80n77d05/alexandria/?unit=us" data-label_1="CURRENT" data-label_2="WEATHER" data-font="Open Sans" 
+                                    data-theme="pure" ></a>
+                                    <script>
+                                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';
+                                    fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
