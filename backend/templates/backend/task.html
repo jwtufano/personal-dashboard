@@ -1,0 +1,10 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+    <p style="margin-left: {{ indent }}px"><a href="/backend/todo/task/{{ task.pk }}"><input type="checkbox" name="completion">{{ task }}</input></a></p>
+    {% for task in task.task_set.all %}
+        {% include "backend/task.html" with indent=indent|add:indent %}
+    {% endfor %}
+{% else %}
+    <p>No user is available.</p>
+{% endif %}

@@ -1,10 +1,10 @@
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
-from backend.models import Task, TaskList, TaskListGroup, Event, EventList, \
-                           Course, GradeCategory, Grade
+from backend.models import Task, TaskList
 
 class TaskTestCase(TestCase):
     def setUp(self):
+        TaskList.objects.create()
         Task.objects.create()
         Task.objects.create(task_name="Test Name", task_description="Test description")
 
@@ -18,7 +18,7 @@ class TaskTestCase(TestCase):
     
     def test_default_task_str(self):
         default = Task.objects.get(id=1)
-        self.assertEqual(default.__str__(), "Task: Task description")
+        self.assertEqual(default.__str__(), default.task_name)
 
 class user_test(TestCase):
     def setUp(self):
