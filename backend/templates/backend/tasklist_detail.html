@@ -1,0 +1,17 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+    {% if user == object.user %}
+        <p><a href="/backend/todo">Todo Home</a></p>
+        <p>{{ object.tasklist_name }}</p>
+        {% for task in tasklist.task_set.all %}
+            {% include "backend/task.html" with indent=40 %}
+        {% endfor %}
+        <a href="/backend/todo/{{ object.pk }}/create-task"><button type="button" class="btn btn-default">Add task to list</button></a>
+    {% else %}
+        <p>Not authorized to view this content.</p>
+    {% endif %}
+{% else %}
+    <p>No user is available.</p>
+{% endif %}
+

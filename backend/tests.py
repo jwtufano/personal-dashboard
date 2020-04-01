@@ -1,7 +1,25 @@
 from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
+from backend.models import Task, TaskList
 
-# Create your tests here.
+class TaskTestCase(TestCase):
+    def setUp(self):
+        TaskList.objects.create()
+        Task.objects.create()
+        Task.objects.create(task_name="Test Name", task_description="Test description")
+
+    def test_default_task_name_setup(self):
+        default = Task.objects.get(id=1)
+        self.assertEqual(default.task_name, "Task")
+    
+    def test_default_task_description_setup(self):
+        default = Task.objects.get(id=1)
+        self.assertEqual(default.task_description, "Task description")
+    
+    def test_default_task_str(self):
+        default = Task.objects.get(id=1)
+        self.assertEqual(default.__str__(), default.task_name)
+
 class user_test(TestCase):
     def setUp(self):
         client = Client()
