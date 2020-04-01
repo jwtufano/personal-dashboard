@@ -1,3 +1,9 @@
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+{% if user.is_authenticated %}
+    <meta http-equiv="refresh" content="0; URL={% url 'home' %}">
+{% else %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,9 +13,9 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Personal Dashboard</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{% static 'backend/styles.css' %}">
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
     </head>
     <body class="bg-primary">
         <div id="layoutAuthentication">
@@ -19,16 +25,26 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login with Google</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form method="post">
-                                            {% csrf_token %}
-                                            {{ form.as_p }}
-                                            <button type="submit">Login</button>
-                                          </form>
+                                      <form class="login" method="POST" action="{% url 'account_login' %}">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                      <div class="text-center">
+                                        <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+                                      </br>
+                                        <a class="small" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                                      </div>
+                                      </form>
+                                    </div>
+                                    <div class="card-header">
+                                      <div class="text-center">
+                                        <body>Or</body>
+                                        <p><a class="btn btn-link" href="{% provider_login_url 'google' %}">Log In with Gmail</a></p>
+                                      </div>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="{{ signup_url }}">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -42,9 +58,9 @@
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; pdnj 2020</div>
                             <div>
-                                <a href="#">About</a>
+                                <a href="#">Privacy Policy</a>
                                 &middot;
-                                <a href="#">References</a>
+                                <a href="#">Terms &amp; Conditions</a>
                             </div>
                         </div>
                     </div>
@@ -56,3 +72,4 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
+{% endif %}

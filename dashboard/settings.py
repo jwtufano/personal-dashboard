@@ -64,7 +64,7 @@ ROOT_URLCONF = 'dashboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -168,7 +168,8 @@ STATIC_ROOT = 'collected-static/'
 
 AUTH_USER_MODEL = 'backend.CustomUser'
 LOGIN_REDIRECT_URL = '/backend/'
-LOGOUT_REDIRECT_URL = '/backend/'
+ACCOUNT_LOGOUT_REDIRECT_URL ='/backend/'
+ACCOUNT_LOGOUT_ON_GET = True
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
