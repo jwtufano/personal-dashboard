@@ -1,70 +1,66 @@
 <!-- templates/accounts/home.html-->
-{% extends '../base.html' %}
-
 {% load static %}
 
-{% block title %}Home{% endblock %}
-
-{% block content %}
-<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="">Personal Dashboard</a>
-    </div>
-  </div>
-</nav>
-<div>
-  {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'accounts:logout' %}">logout</a></p>
-  {% else %}
-  <div class="container" align="center">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-          <div class="row">
-              <h3>Welcome to your Personal Dashboard</h3>
-              <hr>
-          </div>
-          <img src="{% static 'images/desk.png' %}" width="200px" style="padding-bottom: 3%">
-          <div class="row well">
-            <div class="col s12 m6 offset-m3 center-align">
-              <a class="oauth-container btn darken-4 white black-text" href="{% url 'social:begin' 'google-oauth2' %}" style="text-transform:none">
-                <div class="left">
-                  <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                </div>
-                Login with Google
-              </a>
+{% if user.is_authenticated %}
+    <meta http-equiv="refresh" content="0; URL={% url 'home' %}">
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Personal Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'dashboard/styles.css' %}">
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login Options:</h3></div>
+                                    <div class="card-body">
+                                      <div class="text-center">
+                                        <a class="oauth-container btn darken-4 white black-text" href="{% url 'social:begin' 'google-oauth2' %}" style="text-transform:none;">
+                                          <div class="left">
+                                            <img width="20px" style="margin-top:7px; margin-right:8px;" alt="Google sign-in"
+                                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                          </div>
+                                          Login with Google
+                                        </a>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
             </div>
-          </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-</div>
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-<style>
-  .mybutton{
-    background-color: #333333;
-    border-color: #333333;
-    color: white;
-  }
-  .mybutton:hover{
-    background-color:white;
-    border-color: #333333;
-    border-width: 1px;
-    color: #333333;
-  }
-</style>
-{% endblock %}
+            <div id="layoutAuthentication_footer">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; pdnj 2020</div>
+                            <div>
+                                <a href="#">About Us</a>
+                                &middot;
+                                <a href="#">References</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+{% endif %}
