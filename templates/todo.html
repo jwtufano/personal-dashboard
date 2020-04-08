@@ -31,6 +31,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>To-Do List Actions</div>
+                <div class="card-body">
+                    <div class="text-center" style="margin-bottom: 10px;">
+                        <a class="btn btn-secondary" href="{% url 'dashboard:create_list'%}">Create a To-Do List</a>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px;">
+                        <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to a List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
