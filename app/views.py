@@ -39,8 +39,11 @@ def delete_list(request):
 
 
 def list_lists(request):
-    task_list = TaskList.objects.all()
-    return render("list-lists.html", {"task_list": task_list})
+    try:
+        task_list = list(TaskList.objects.all())
+    except TaskList.DoesNotExist:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return render(request, "list-lists.html", {"task_list": task_list})
 
 
 def create_item(request):
@@ -94,10 +97,24 @@ def delete_item(request):
 
 def list_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
-    tasklist = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
-    if tasklist:
-        items = TaskItem.objects.filter(task_list=tasklist)
-    return render("list-items.html", {"items": items})
+    try:
+        items = TaskItem.objects.all()
+    except TaskList.DoesNotExist:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    task_lists = []
+    for item in items:
+        if item.task_list not in task_lists:
+            task_lists.append(item.task_list)
+    lists = []
+    for task_list in task_lists:
+        helper = []
+        helper.append(task_list)
+        why = list(TaskItem.objects.filter(task_list=task_list))
+        for item in why:
+            helper.append(item)
+        lists.append(helper)
+    print(lists)
+    return render(request, "list-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
 
 
 def dashboard(request):

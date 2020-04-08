@@ -31,11 +31,9 @@ class TaskItemForm(forms.Form):
     task_list = forms.ModelChoiceField(queryset=TaskList.objects.all(), error_messages = {"required": "Please choose a List"})
 
 
-class delTaskList(ModelForm):
-    # TODO add
-    pass
+class delTaskList(forms.Form):
+    task_list = forms.ModelChoiceField(queryset=TaskList.objects.all(), error_messages = {"required": "Please choose a list"})
 
 
 class delTaskItem(forms.Form):
-    # TODO add
-    pass
+    task_item = forms.ModelChoiceField(queryset=TaskItem.objects.all(), error_messages = {"required": "Please choose a list"})

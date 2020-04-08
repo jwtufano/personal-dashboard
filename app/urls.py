@@ -12,4 +12,6 @@ urlpatterns = [
     path("update_list/", views.update_list, name="update_list"),
     path("update_item/", views.update_item, name="update_item"),
     path("todo/", views.todo, name="todo"),
+    path("view_items/", views.list_items, name="view_items"),
+    path("view_lists/", views.list_lists, name="view_lists"),
 ]
