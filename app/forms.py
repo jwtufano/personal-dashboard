@@ -25,3 +25,9 @@ class TaskItemForm(forms.Form):
     task_priority = forms.ChoiceField(choices=CHOICES)
     task_completion = forms.BooleanField()
     task_list = forms.ModelChoiceField(queryset=TaskList.objects.all(), error_messages = {"required": "Please choose a List"})
+
+class GradeCategoryForm(forms.Form):
+    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2)
+    current_points_earned = forms.IntegerField(min_value=0)
+    current_points_possible = forms.IntegerField(min_value=0)
+    total_points_possible = forms.IntegerField(min_value=0)
