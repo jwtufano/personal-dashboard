@@ -15,9 +15,8 @@
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Your To-Do Lists</div>
                 <div class="card-body">
-                    <p>You have ___ to-do list(s).</p>
-                    <!-- {% if user.tasklist_set.all.count == 0 %}
-                        <p>User has no tasklists.</p>
+                    {% if user.tasklist_set.all.count == 0 %}
+                        <p>You have no tasklists.</p>
                     {% else %}
                         {% for tasklist in user.tasklist_set.all %}
                             <p>{{ tasklist.tasklist_name }}</p>
@@ -27,7 +26,7 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
-                    {% endif %} -->
+                    {% endif %}
                 </div>
             </div>
         </div>
