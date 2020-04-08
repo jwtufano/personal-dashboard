@@ -1,12 +1,11 @@
-from django.shortcuts import render, reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, reverse, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 
 from models.models import TaskItem, TaskList
 from app.forms import TaskItemForm, TaskListForm
 
 # Create your views here.
 def create_list(request):
-    # add form template
     if request.method == "POST":
         form = TaskListForm(request.POST)
         if form.is_valid():
@@ -18,9 +17,9 @@ def create_list(request):
 
 
 def update_list(request):
-    # add form template
     if request.method == "POST":
-        form = TaskListForm(request.POST)
+        data = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
+        form = TaskListForm(request.POST, initial=data)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse("dashboard:dashboard"))
@@ -30,20 +29,33 @@ def update_list(request):
 
 
 def delete_list(request):
-    # if post request, remove the list using TaskList.objects.get()
-    pass
+    if request.method == "POST":
+        if 'delete' in request.POST:
+            item = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
+            if item:
+                item.delete()
+                return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
 
 def list_lists(request):
-    # return list that is TaskLists.objects.get()
-    pass
+    task_list = TaskList.objects.all()
+    return render("list-lists.html", {"task_list": task_list})
 
 
 def create_item(request):
-    # add form template
     if request.method == "POST":
         form = TaskItemForm(request.POST)
         if form.is_valid():
+            item = TaskItem()
+            item.task_name = form.cleaned_data['task_name']
+            item.task_description = form.cleaned_data['task_description']
+            item.task_created_date = form.cleaned_data['task_created_date']
+            item.task_due_date = form.cleaned_data['task_due_date']
+            item.task_priority = form.cleaned_data['task_priority']
+            item.task_completion = form.cleaned_data['task_completion']
+            item.task_list = form.cleaned_data['task_list']
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:dashboard"))
     else:
         form = TaskItemForm()
@@ -51,10 +63,19 @@ def create_item(request):
 
 
 def update_item(request):
-    # add form template
     if request.method == "POST":
-        form = TaskItemForm(request.POST)
+        data = TaskItem.objects.get_object_or_404(task_list_name=request.POST.get("task_name"))
+        form = TaskItemForm(request.POST, initial=data)
         if form.is_valid():
+            item = TaskItem()
+            item.task_name = form.cleaned_data['task_name']
+            item.task_description = form.cleaned_data['task_description']
+            item.task_created_date = form.cleaned_data['task_created_date']
+            item.task_due_date = form.cleaned_data['task_due_date']
+            item.task_priority = form.cleaned_data['task_priority']
+            item.task_completion = form.cleaned_data['task_completion']
+            item.task_list = form.cleaned_data['task_list']
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:dashboard"))
     else:
         form = TaskItemForm()
@@ -62,13 +83,21 @@ def update_item(request):
 
 
 def delete_item(request):
-    # if post request, remove the list using TaskList.objects.get()
-    pass
+    if request.method == "POST":
+        if 'delete' in request.POST:
+            item = TaskItem.objects.get_object_or_404(task_list_name=request.POST.get("task_name"))
+            if item:
+                item.delete()
+                return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
 
 def list_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
-    pass
+    tasklist = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
+    if tasklist:
+        items = TaskItem.objects.filter(task_list=tasklist)
+    return render("list-items.html", {"items": items})
 
 
 def dashboard(request):
