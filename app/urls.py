@@ -11,4 +11,5 @@ urlpatterns = [
     path("create_item/", views.create_item, name="create_item"),
     path("update_list/", views.update_list, name="update_list"),
     path("update_item/", views.update_item, name="update_item"),
+    path("todo/", views.todo, name="todo"),
 ]

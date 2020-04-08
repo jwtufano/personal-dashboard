@@ -68,3 +68,8 @@ def dashboard(request):
     if request.user.is_authenticated:
         return render(request, 'dashboard.html')
     return HttpResponseRedirect(reverse('home'))
+
+def todo(request):
+    if request.user.is_authenticated:
+        return render(request, 'todo.html')
+    return HttpResponseRedirect(reverse('home'))

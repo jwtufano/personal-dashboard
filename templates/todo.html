@@ -1,0 +1,36 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mt-4">To-Do List</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Your Personal Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Your To-Do Lists</div>
+                <div class="card-body">
+                    <p>You have ___ to-do list(s).</p>
+                    <!-- {% if user.tasklist_set.all.count == 0 %}
+                        <p>User has no tasklists.</p>
+                    {% else %}
+                        {% for tasklist in user.tasklist_set.all %}
+                            <p>{{ tasklist.tasklist_name }}</p>
+                            {% for task in tasklist.task_set.all %}
+                                {% if task.parent_task is None %}
+                                    {% include "backend/task.html" with indent=40 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %} -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
