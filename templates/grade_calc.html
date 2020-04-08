@@ -1,0 +1,33 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block title %}Grade Calculator{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+        <div class="grade-category-formset">
+            {{ form.as_table }}
+        </div>
+    {% endfor %}
+
+    <p><input type="submit" value="Calculate" class="button"/></p>
+</form>
+
+<!-- Include formset plugin - including jQuery dependency -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'jquery.formset.js' %}"></script>
+<script>
+    $('.grade-category-formset').formset({
+        addText: 'add category',
+        deleteText: 'remove category'
+    });
+</script>
+
+{% endblock content %}
