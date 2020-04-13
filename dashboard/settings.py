@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app',
     'social_django',
     'crispy_forms',
+    'weather',
 ]
 
 MIDDLEWARE = [

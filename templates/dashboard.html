@@ -1,9 +1,6 @@
-<!-- templates/dashboard.html -->
 {% extends 'navbar.html' %}
 
 {% load static %}
-
-{% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -12,19 +9,50 @@
         <li class="breadcrumb-item active">Your Personal Dashboard</li>
     </ol>
     <div class="row">
-        <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Current Weather</div>
-                <a class="weatherwidget-io" href="https://forecast7.com/en/38d80n77d05/alexandria/?unit=us" data-label_1="CURRENT" data-label_2="WEATHER" data-font="Open Sans" 
-                data-theme="pure" ></a>
-                <script>
-                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';
-                fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-                </script>
-            </div>
-        </div>
     </div>
     <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Current Weather</div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{ form.name }}
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </br>
+                    {% for weather in weather_data %}
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{ weather.city }}</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather.temperature }}° F</span>
+                                        <br> {{ weather.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         <div class="col-xl-6">
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-chart-area mr-1"></i>To-Do List Shortcuts</div>
@@ -35,13 +63,6 @@
                     <div class="text-center" style="margin-top: 10px;">
                         <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to a List</a>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Future Functionality</div>
-                <div class="card-body">
                 </div>
             </div>
         </div>

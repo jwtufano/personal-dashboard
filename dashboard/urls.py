@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
     path("accounts/", include("accounts.urls")),
     path("dashboard/", include("app.urls")),
+    path("weather/", include('weather.urls')),
 ]

@@ -2,9 +2,12 @@ from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from decimal import *
 from django.forms.formsets import formset_factory
+import requests
 
 from models.models import TaskItem, TaskList
 from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm
+from weather.models import City
+from weather.forms import CityForm
 
 # Create your views here.
 def create_list(request):
@@ -121,9 +124,32 @@ def list_items(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, 'dashboard.html')
-    return HttpResponseRedirect(reverse('home'))
+        url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=f0ec1cf58c705f937e3cd62b5a0e5f14'
+        cities = City.objects.all() #return all the cities in the database
+    
+        if request.method == 'POST': # only true if form is submitted
+            form = CityForm(request.POST) # add actual request data to form for processing
+            form.save() # will validate and save if validate
+    
+        form = CityForm()
 
+        weather_data = []
+        for city in cities:
+
+            city_weather = requests.get(url.format(city)).json() #request the API data and convert the JSON to Python data types
+
+            weather = {
+                'city' : city,
+                'temperature' : city_weather['main']['temp'],
+                'description' : city_weather['weather'][0]['description'],
+                'icon' : city_weather['weather'][0]['icon']
+            }
+
+            weather_data.append(weather) #add the data for the current city into our list
+
+        context = {'weather_data' : weather_data, 'form' : form}
+        return render(request, 'dashboard.html', context) #returns the index.html template
+    return HttpResponseRedirect(reverse('home'))
 
 def todo(request):
     if request.user.is_authenticated:
