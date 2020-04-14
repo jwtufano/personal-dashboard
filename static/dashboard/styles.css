@@ -10229,7 +10229,8 @@ body {
   font-size: 13px;
 }
 
-.calendar tr, .calendar td {
+.calendar tr, 
+.calendar td {
   border: 1px solid black;
 }
 

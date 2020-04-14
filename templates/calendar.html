@@ -13,7 +13,8 @@
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Calendar</div>
                 <div class="card-body">
-                    {{ calendar }}
+                    {% autoescape off %}{{ calendar }}{% endautoescape %}
+                </table>
                 </div>
             </div>
         </div>

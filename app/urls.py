@@ -16,5 +16,5 @@ urlpatterns = [
     path("view_lists/", views.list_lists, name="view_lists"),
     path("grade_calc/", views.grade_calc, name="grade_calc"),
     path("grade_calc/results/", views.grade_calc_results, name="grade_calc_results"),
-    path("calendar/", views.CalendarView.as_view(), name="calendar"),
+    path("calendar/", views.make_calendar, name="calendar"),
 ]
