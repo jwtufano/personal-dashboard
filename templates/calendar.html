@@ -4,22 +4,13 @@
 
 {% block content %}
 <div class="container-fluid">
-    <h1 class="mt-4">Calendar</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Calendar of all items across your to-do lists!</li>
-    </ol>
     <div class="row">
         <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Calendar</div>
-                <div class="card-body">
-                    <div class="clearfix">
-                        <a class="btn btn-info left" href="?{{ prev_month }}"> Previous Month </a>
-                        <a class="btn btn-info right" href="?{{ next_month }}"> Next Month </a>
-                    </div>
-                    {% autoescape off %}{{ calendar }}{% endautoescape %}
-                </div>
+            <div class="clearfix">
+                <a class="btn btn-primary left" style='margin-top: 15px;' href="?{{ prev_month }}"> < Previous Month </a>
+                <a class="btn btn-primary right" style='margin-top: 15px;' href="?{{ next_month }}"> Next Month > </a>
             </div>
+            {% autoescape off %}{{ calendar }}{% endautoescape %}
         </div>
     </div>
 </div>
