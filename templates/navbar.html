@@ -8,6 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Personal Dashboard</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
         <link rel="stylesheet" type="text/css" href="{% static 'dashboard/weather.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'dashboard/styles.css' %}">
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -46,7 +47,7 @@
                                 ><div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                                 To-Do List</a
                             >
-                            <a class="nav-link" href="{% url 'dashboard:dashboard'%}"
+                            <a class="nav-link" href="{% url 'dashboard:calendar'%}"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Calendar</a
                             >
@@ -82,6 +83,8 @@
                 </footer>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>

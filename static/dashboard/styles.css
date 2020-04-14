@@ -107,8 +107,14 @@ address {
 }
 
 ol,
-ul,
 dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ul {
+  height: 100%;
+  padding: 0px 5px 0px 20px;
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -10215,4 +10221,34 @@ body {
 .myfieldclass {
   margin: 10px;
   margin-top: 5px;
+}
+
+.calendar {
+  width: 98%;
+  margin: auto;
+  font-size: 13px;
+}
+
+.calendar tr, .calendar td {
+  border: 1px solid black;
+}
+
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  width: 200px;
+  height: 150px;
+  padding: 20px 0px 0px 5px;
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date {
+  font-size: 16px;
 }

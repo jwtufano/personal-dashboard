@@ -1,0 +1,22 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mt-4">Calendar</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Calendar of all items across your to-do lists!</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Calendar</div>
+                <div class="card-body">
+                    {{ calendar }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
