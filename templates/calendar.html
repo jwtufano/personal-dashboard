@@ -13,6 +13,10 @@
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Calendar</div>
                 <div class="card-body">
+                    <div class="clearfix">
+                        <a class="btn btn-info left" href="?{{ prev_month }}"> Previous Month </a>
+                        <a class="btn btn-info right" href="?{{ next_month }}"> Next Month </a>
+                    </div>
                     {% autoescape off %}{{ calendar }}{% endautoescape %}
                 </div>
             </div>

@@ -10231,7 +10231,7 @@ body {
 
 .calendar tr, 
 .calendar td {
-  border: 1px solid black;
+  border: 1.5px solid gray;
 }
 
 .calendar th {
@@ -10252,4 +10252,23 @@ body {
 
 .date {
   font-size: 16px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.btn {
+  outline: none;
+  color: black;
+  background-color: transparent;
+  box-shadow: 0 0 0 0;
+}
+
+.clearfix {
+  margin: 15px;
 }
