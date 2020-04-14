@@ -5,20 +5,34 @@
 {% block title %}Grade Calculator{% endblock %}
 
 {% block content %}
-
-<form method="post">
-    {% csrf_token %}
-
-    {{ formset.management_form }}
-
-    {% for form in formset %}
-        <div class="grade-category-formset">
-            {{ form.as_table }}
+<div class="container-fluid">
+    <h1 class="mt-4">Grade Calculation</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Calculate your overall grade in a class</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Grade Spreadsheet</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                    
+                        {{ formset.management_form }}
+                    
+                        {% for form in formset %}
+                            <div class="grade-category-formset">
+                                {{ form.as_table }}
+                            </div>
+                        {% endfor %}
+                    
+                        <p><input type="submit" value="Calculate" class="btn btn-primary" style="margin-top: 10px;"/></p>
+                    </form>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-
-    <p><input type="submit" value="Calculate" class="button"/></p>
-</form>
+    </div>
+</div>
 
 <!-- Include formset plugin - including jQuery dependency -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

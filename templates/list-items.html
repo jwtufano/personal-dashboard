@@ -2,22 +2,11 @@
 
 {% load static %}
 
-{% block title %}To Do Lists{% endblock %}
-
 {% block content %}
-{% comment %} {% for task_list in task_lists %}
-    {% for item in items %}
-        <h4>{{ item }}</h4>
-    {% endfor %}
-{% endfor %} {% endcomment %}
 
 {% for list in lists %}
     {% for item in list %}
-        {% if forloop.counter0 %}
-            <h2>{{ item }}<h2>
-        {% else %}
-            <h4>{{ item }}</h4>
-        {% endif %}
+        <h4>{{ item }}</h4>
     {% endfor %}
 {% endfor %}
 

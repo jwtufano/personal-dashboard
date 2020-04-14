@@ -40,7 +40,6 @@ class delTaskItem(forms.Form):
 
  
 class GradeCategoryForm(forms.Form):
-    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2)
-    current_points_earned = forms.IntegerField(min_value=0)
-    current_points_possible = forms.IntegerField(min_value=0)
-    total_points_possible = forms.IntegerField(min_value=0)
+    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
+    current_points_earned = forms.IntegerField(min_value=0, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
+    current_points_possible = forms.IntegerField(min_value=0, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
