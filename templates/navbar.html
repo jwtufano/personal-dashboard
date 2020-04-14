@@ -16,7 +16,7 @@
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="{% url 'dashboard:dashboard'%}">Personal Dashboard</a>
+            <a class="navbar-brand" href="{% url 'dashboard:dashboard'%}">Personal Dashboard</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item dropdown">
@@ -52,7 +52,7 @@
                                 Calendar</a
                             >
                             <div class="sb-sidenav-menu-heading">Other</div>
-                            <a class="nav-link" href="{% url 'dashboard:dashboard'%}"
+                            <a class="nav-link" href="#"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Settings</a
                             >
@@ -90,5 +90,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+        <script src="{% static 'dashboard/js/scripts.js' %}"></script>
     </body>
 </html>
