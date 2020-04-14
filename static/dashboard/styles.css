@@ -10226,7 +10226,8 @@ body {
 .calendar {
   width: 100%;
   margin: auto;
-  font-size: 13px;
+  font-size: 12px;
+  color: #007bff;
 }
 
 .calendar tr, 
@@ -10251,6 +10252,7 @@ body {
 }
 
 .date {
+  color: black;
   font-size: 16px;
 }
 
