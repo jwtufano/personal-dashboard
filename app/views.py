@@ -149,7 +149,8 @@ def delete_item(request):
 def list_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
     try:
-        items = TaskItem.objects.all()
+        prof = Profile.objects.get(user=request.user)
+        items = TaskItem.objects.filter(task_list__task_user=prof)
     except TaskList.DoesNotExist:
         return HttpResponseRedirect(reverse("dashboard:todo"))
     task_lists = []
@@ -171,7 +172,8 @@ def list_items(request):
 def list_completed_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
     try:
-        items = TaskItem.objects.all()
+        prof = Profile.objects.get(user=request.user)
+        items = TaskItem.objects.filter(task_list__task_user=prof)
     except TaskList.DoesNotExist:
         return HttpResponseRedirect(reverse("dashboard:todo"))
     task_lists = []
