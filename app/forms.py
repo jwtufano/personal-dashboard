@@ -4,10 +4,9 @@ from django import forms
 from models.models import TaskItem, TaskList, CHOICES
 import datetime
 
-class TaskListForm(ModelForm):
-    class Meta:
-        model = TaskList
-        fields = ['task_list_name', 'task_list_description']
+class TaskListForm(forms.Form):
+    task_list_name = forms.CharField(max_length=100, required=True)
+    task_list_description = forms.CharField(max_length=100, required=True)
 
 
 class TaskItemForm(forms.Form):
@@ -39,7 +38,7 @@ class delTaskList(forms.Form):
 class delTaskItem(forms.Form):
     task_item = forms.ModelChoiceField(queryset=TaskItem.objects.all(), error_messages = {"required": "Please choose a list"})
 
- 
+
 class GradeCategoryForm(forms.Form):
     category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, required=True, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please enter a weight"})
     current_points_earned = forms.IntegerField(min_value=0, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please input points earned"})
