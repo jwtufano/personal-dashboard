@@ -5,7 +5,12 @@
 {% block title %}To Do Lists{% endblock %}
 
 {% block content %}
+<style>
+	.tab { margin-left: 40px; }
+</style>
+<ul style="list-style-type:disk;">
 {% for list in task_list %}
-    <h4>{{ list }}</h4>
+    <p><li><h4>{{ list }}</h4></li></p>
 {% endfor %}
+</ul>
 {% endblock content %}
