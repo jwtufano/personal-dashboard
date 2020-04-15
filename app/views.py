@@ -86,7 +86,8 @@ def grade_calc(request):
         if formset.is_valid():
             grade = Decimal(0)
             for form in formset:
-                grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/form.cleaned_data['current_points_possible'])
+                if form.is_valid():
+                    grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/form.cleaned_data['current_points_possible'])
             grade = round(grade, 2)
 
             context = {

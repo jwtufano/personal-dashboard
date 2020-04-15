@@ -1,3 +1,4 @@
+from django.forms.formsets import BaseFormSet
 from django.forms import ModelForm, ChoiceField
 from django import forms
 from models.models import TaskItem, TaskList, CHOICES
@@ -27,7 +28,21 @@ class TaskItemForm(forms.Form):
     task_list = forms.ModelChoiceField(queryset=TaskList.objects.all(), error_messages = {"required": "Please choose a List"})
 
 class GradeCategoryForm(forms.Form):
-    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2)
-    current_points_earned = forms.IntegerField(min_value=0)
-    current_points_possible = forms.IntegerField(min_value=0)
-    total_points_possible = forms.IntegerField(min_value=0)
+    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, required=True)
+    current_points_earned = forms.IntegerField(min_value=0, required=True)
+    current_points_possible = forms.IntegerField(min_value=0, required=True)
+    total_points_possible = forms.IntegerField(min_value=0, required=True)
+
+class BaseGradeCategoryFormSet(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        
+        weights = []
+        urls = []
+        
+        for form in self.forms:
+            if form.cleaned_data:
+                current_points_earned = form.cleaned_data['current_points_earned']
+                current_points_possible = form.cleaned_data['current_points_possible']
+                total_points_possible = form.cleaned_data['total_points_possible']
