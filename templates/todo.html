@@ -13,20 +13,17 @@
     <div class="row">
         <div class="col-xl-6">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Your To-Do Lists</div>
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Views</div>
                 <div class="card-body">
-                    {% if user.tasklist_set.all.count == 0 %}
-                        <p>You have no tasklists.</p>
-                    {% else %}
-                        {% for tasklist in user.tasklist_set.all %}
-                            <p>{{ tasklist.tasklist_name }}</p>
-                            {% for task in tasklist.task_set.all %}
-                                {% if task.parent_task is None %}
-                                    {% include "backend/task.html" with indent=40 %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
+                    <div class="text-center" style="margin-top: 10px;">
+                        <a class="btn btn-secondary" href="{% url 'dashboard:view_lists'%}">View your To-Do Lists</a>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px;">
+                        <a class="btn btn-secondary" href="{% url 'dashboard:view_items'%}">View your To-Do Items</a>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px;">
+                        <a class="btn btn-secondary" href="{% url 'dashboard:view_completed_items'%}">View your Completed To-Do Items</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,12 +36,6 @@
                     </div>
                     <div class="text-center" style="margin-top: 10px;">
                         <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to a List</a>
-                    </div>
-                    <div class="text-center" style="margin-top: 10px;">
-                        <a class="btn btn-secondary" href="{% url 'dashboard:view_lists'%}">View your To-Do Lists</a>
-                    </div>
-                    <div class="text-center" style="margin-top: 10px;">
-                        <a class="btn btn-secondary" href="{% url 'dashboard:view_items'%}">View your To-Do Items</a>
                     </div>
                 </div>
             </div>

@@ -183,9 +183,10 @@ def list_completed_items(request):
         helper.append(task_list)
         why = list(TaskItem.objects.filter(task_list=task_list))
         for item in why:
-            helper.append(item)
+            if item.task_completion:
+                helper.append(item)
         lists.append(helper)
-    return render(request, "list-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
+    return render(request, "list-completed-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
 
 
 def dashboard(request):

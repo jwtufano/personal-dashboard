@@ -19,11 +19,6 @@
                         {% csrf_token %}
                         <button type='submit'>{{ item }}</button>
                     </div>
-                    {% if forloop.last %}
-                        <div class="card-body">
-                            <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to List</a>
-                        </div>
-                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
