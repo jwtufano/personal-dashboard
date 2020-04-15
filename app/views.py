@@ -12,7 +12,7 @@ from datetime import datetime, timedelta, date
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
-from models.models import TaskItem, TaskList
+from models.models import TaskItem, TaskList, Profile
 from .utils import Calendar
 
 # Create your views here.
@@ -52,7 +52,8 @@ def create_list(request):
             item = TaskList()
             item.task_list_name = form.cleaned_data['task_list_name']
             item.task_list_description = form.cleaned_data['task_list_description']
-            item.task_user = request.user
+            prof = Profile.objects.get(user=request.user)
+            item.task_user = prof
             item.save()
             return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
@@ -88,7 +89,8 @@ def delete_list(request):
 
 def list_lists(request):
     try:
-        task_list = list(TaskList.objects.filter(task_user=request.user))
+        prof = Profile.objects.get(user=request.user)
+        task_list = list(TaskList.objects.filter(task_user=prof))
     except TaskList.DoesNotExist:
         return HttpResponseRedirect(reverse("dashboard:todo"))
     return render(request, "list-lists.html", {"task_list": task_list})

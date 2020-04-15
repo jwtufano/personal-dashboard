@@ -3,13 +3,30 @@ from django.db import models
 from datetime import date, datetime, timedelta
 
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 CHOICES = [(1, 'low'), (2, 'normal'), (3, 'high')]
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    city_list = ArrayField(models.CharField(max_length=20, blank=True))
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance, city_list=[""])
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+
 class TaskList(models.Model):
-    task_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default=User)
+    task_user = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     task_list_name = models.CharField(max_length=100, default="To Do List") # , unique=True)
     task_list_description = models.CharField(max_length = 100, default="My To Do List")
 
