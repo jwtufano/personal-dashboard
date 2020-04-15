@@ -8,12 +8,11 @@ import calendar
 from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm
 from weather.models import City
 from weather.forms import CityForm
-
 from datetime import datetime, timedelta, date
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
-from models.models import *
+from models.models import TaskItem, TaskList
 from .utils import Calendar
 
 # Create your views here.
@@ -50,7 +49,9 @@ def create_list(request):
     if request.method == "POST":
         form = TaskListForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = TaskList()
+            item.task_list_name = form.cleaned_data['task_list_name']
+            item.task_list_description = form.cleaned_data['task_list_description']
             return HttpResponseRedirect(reverse("dashboard:dashboard"))
     else:
         form = TaskListForm()
@@ -162,11 +163,11 @@ def dashboard(request):
     if request.user.is_authenticated:
         url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=f0ec1cf58c705f937e3cd62b5a0e5f14'
         cities = City.objects.all() #return all the cities in the database
-    
+
         if request.method == 'POST': # only true if form is submitted
             form = CityForm(request.POST) # add actual request data to form for processing
             form.save() # will validate and save if validate
-    
+
         form = CityForm()
 
         weather_data = []
@@ -192,7 +193,7 @@ def todo(request):
         return render(request, 'todo.html')
     return HttpResponseRedirect(reverse('home'))
 
-  
+
 def grade_calc(request):
     GradeCalcFormSet = formset_factory(GradeCategoryForm)
     formset = GradeCalcFormSet()

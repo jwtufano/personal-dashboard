@@ -2,11 +2,14 @@ from django.db import models
 
 from datetime import date, datetime, timedelta
 
+from django.contrib.auth.models import User
+
 # Create your models here.
 CHOICES = [(1, 'low'), (2, 'normal'), (3, 'high')]
 
 
 class TaskList(models.Model):
+    task_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default=User)
     task_list_name = models.CharField(max_length=100, default="To Do List") # , unique=True)
     task_list_description = models.CharField(max_length = 100, default="My To Do List")
 

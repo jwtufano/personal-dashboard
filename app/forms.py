@@ -38,7 +38,7 @@ class delTaskList(forms.Form):
 class delTaskItem(forms.Form):
     task_item = forms.ModelChoiceField(queryset=TaskItem.objects.all(), error_messages = {"required": "Please choose a list"})
 
- 
+
 class GradeCategoryForm(forms.Form):
     category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
     current_points_earned = forms.IntegerField(min_value=0, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
