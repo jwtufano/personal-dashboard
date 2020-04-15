@@ -37,10 +37,11 @@ def next_month(d):
 
 def make_calendar(request):
     if request.user.is_authenticated:
+        prof = Profile.objects.get(user=request.user)
         d = get_date(request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
         cal.setfirstweekday(6)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(withyear=True, user=prof)
         context = {'calendar' : mark_safe(html_cal), 'prev_month' : prev_month(d), 'next_month' : next_month(d)}
         return render(request, 'calendar.html', context)
     return HttpResponseRedirect(reverse('home'))
