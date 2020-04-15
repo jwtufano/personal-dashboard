@@ -9,7 +9,11 @@
 <ul style="list-style-type:disk;">
 {% for list in lists %}
     {% for item in list %}
-        <p><li><h4>{{ item }}</h4></li></p>
+        <p><li><h4>{{ item }}</h4>
+        <form role="form" method="POST" action='{% url 'dashboard:complete' pk=item.id %}'>
+        {% csrf_token %}
+        <button type='submit'>Check</button>
+        </li></p>
     {% endfor %}
 {% endfor %}
 </ul>
