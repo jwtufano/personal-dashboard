@@ -169,7 +169,8 @@ def list_items(request):
 def dashboard(request):
     if request.user.is_authenticated:
         url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=f0ec1cf58c705f937e3cd62b5a0e5f14'
-        cities = City.objects.all() #return all the cities in the database
+        prof = Profile.objects.get(user=request.user)
+        cities = City.objects.filter(city_user=prof) #return all the cities in the database
 
         if request.method == 'POST': # only true if form is submitted
             form = CityForm(request.POST) # add actual request data to form for processing

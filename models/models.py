@@ -3,7 +3,6 @@ from django.db import models
 from datetime import date, datetime, timedelta
 
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import ArrayField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -13,12 +12,11 @@ CHOICES = [(1, 'low'), (2, 'normal'), (3, 'high')]
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    city_list = ArrayField(models.CharField(max_length=20, blank=True))
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance, city_list=[""])
+        Profile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
@@ -82,6 +80,7 @@ class TaskItem(models.Model):
         ordering = ['task_due_date']
 
 class City(models.Model):
+    city_user = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=25)
 
     def __str__(self): #show the actual city name on the dashboard
