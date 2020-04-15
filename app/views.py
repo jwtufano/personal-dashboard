@@ -41,7 +41,7 @@ def make_calendar(request):
         cal = Calendar(d.year, d.month)
         cal.setfirstweekday(6)
         html_cal = cal.formatmonth(withyear=True)
-        context = {'calendar' : html_cal, 'prev_month' : prev_month(d), 'next_month' : next_month(d)}
+        context = {'calendar' : mark_safe(html_cal), 'prev_month' : prev_month(d), 'next_month' : next_month(d)}
         return render(request, 'calendar.html', context)
     return HttpResponseRedirect(reverse('home'))
 
@@ -54,7 +54,7 @@ def create_list(request):
             item.task_list_description = form.cleaned_data['task_list_description']
             item.task_user = request.user
             item.save()
-            return HttpResponseRedirect(reverse("dashboard:dashboard"))
+            return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskListForm()
     return render(request, "create_list_form.html", {"form": form})
@@ -66,7 +66,7 @@ def update_list(request):
         form = TaskListForm(request.POST, initial=data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("dashboard:dashboard"))
+            return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskListForm()
     return render(request, "create_list_form.html", {"form": form})
@@ -78,7 +78,7 @@ def delete_list(request):
             item = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
             if item:
                 item.delete()
-                return HttpResponseRedirect(reverse("dashboard:dashboard"))
+                return HttpResponseRedirect(reverse("dashboard:todo"))
     return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
 
@@ -86,7 +86,7 @@ def list_lists(request):
     try:
         task_list = list(TaskList.objects.filter(task_user=request.user))
     except TaskList.DoesNotExist:
-        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+        return HttpResponseRedirect(reverse("dashboard:todo"))
     return render(request, "list-lists.html", {"task_list": task_list})
 
 
@@ -103,7 +103,7 @@ def create_item(request):
             item.task_completion = form.cleaned_data['task_completion']
             item.task_list = form.cleaned_data['task_list']
             item.save()
-            return HttpResponseRedirect(reverse("dashboard:dashboard"))
+            return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskItemForm()
     return render(request, "create_item_form.html", {"form": form})
@@ -123,7 +123,7 @@ def update_item(request):
             item.task_completion = form.cleaned_data['task_completion']
             item.task_list = form.cleaned_data['task_list']
             item.save()
-            return HttpResponseRedirect(reverse("dashboard:dashboard"))
+            return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskItemForm()
     return render(request, "create_item_form.html", {"form": form})
@@ -135,7 +135,7 @@ def delete_item(request):
             item = TaskItem.objects.get_object_or_404(task_list_name=request.POST.get("task_name"))
             if item:
                 item.delete()
-                return HttpResponseRedirect(reverse("dashboard:dashboard"))
+                return HttpResponseRedirect(reverse("dashboard:todo"))
     return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
 
@@ -144,7 +144,7 @@ def list_items(request):
     try:
         items = TaskItem.objects.all()
     except TaskList.DoesNotExist:
-        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+        return HttpResponseRedirect(reverse("dashboard:todo"))
     task_lists = []
     for item in items:
         if item.task_list not in task_lists:
