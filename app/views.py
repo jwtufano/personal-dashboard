@@ -98,8 +98,9 @@ def list_lists(request):
 
 
 def create_item(request):
+    prof = Profile.objects.get(user=request.user)
     if request.method == "POST":
-        form = TaskItemForm(request.POST)
+        form = TaskItemForm(request.POST, prof)
         if form.is_valid():
             item = TaskItem()
             item.task_name = form.cleaned_data['task_name']
@@ -112,7 +113,7 @@ def create_item(request):
             item.save()
             return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
-        form = TaskItemForm()
+        form = TaskItemForm(prof)
     return render(request, "create_item_form.html", {"form": form})
 
 

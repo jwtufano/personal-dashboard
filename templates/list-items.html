@@ -18,7 +18,7 @@
                         <form role="form" method="POST" action='{% url 'dashboard:complete' pk=item.id %}'>
                         {% csrf_token %}
                         <p style='display: inline-block;'>{{item}}</p>
-                        <button style='display: inline-block;'type='submit'>Complete</button>
+                        <button class="btn btn-outline-primary btn-sm" style='display: inline-block; margin-left: 15px;' type='submit'>Mark Complete</button>
                     </div>
                     {% if forloop.last %}
                         <div class="card-body">
