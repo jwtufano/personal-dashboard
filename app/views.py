@@ -174,7 +174,12 @@ def dashboard(request):
 
         if request.method == 'POST': # only true if form is submitted
             form = CityForm(request.POST) # add actual request data to form for processing
-            form.save() # will validate and save if validate
+            if form.is_valid():
+                item = City()
+                item.name = form.cleaned_data['name']
+                prof = Profile.objects.get(user=request.user)
+                item.user = prof
+                item.save()
 
         form = CityForm()
 
