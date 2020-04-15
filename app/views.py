@@ -6,7 +6,7 @@ import requests
 import calendar
 
 from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm
-from weather.models import City
+from models.models import City
 from weather.forms import CityForm
 from datetime import datetime, timedelta, date
 from django.http import HttpResponse
