@@ -8,12 +8,11 @@ import calendar
 from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm
 from weather.models import City
 from weather.forms import CityForm
-
 from datetime import datetime, timedelta, date
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
-from models.models import *
+from models.models import TaskItem, TaskList, Profile
 from .utils import Calendar
 
 # Create your views here.
@@ -50,7 +49,12 @@ def create_list(request):
     if request.method == "POST":
         form = TaskListForm(request.POST)
         if form.is_valid():
-            form.save()
+            item = TaskList()
+            item.task_list_name = form.cleaned_data['task_list_name']
+            item.task_list_description = form.cleaned_data['task_list_description']
+            prof = Profile.objects.get(user=request.user)
+            item.task_user = prof
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskListForm()
@@ -62,7 +66,11 @@ def update_list(request):
         data = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
         form = TaskListForm(request.POST, initial=data)
         if form.is_valid():
-            form.save()
+            item = TaskList()
+            item.task_list_name = form.cleaned_data['task_list_name']
+            item.task_list_description = form.cleaned_data['task_list_description']
+            item.task_user = request.user
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskListForm()
@@ -81,7 +89,8 @@ def delete_list(request):
 
 def list_lists(request):
     try:
-        task_list = list(TaskList.objects.all())
+        prof = Profile.objects.get(user=request.user)
+        task_list = list(TaskList.objects.filter(task_user=prof))
     except TaskList.DoesNotExist:
         return HttpResponseRedirect(reverse("dashboard:todo"))
     return render(request, "list-lists.html", {"task_list": task_list})
@@ -154,7 +163,6 @@ def list_items(request):
         for item in why:
             helper.append(item)
         lists.append(helper)
-    print(lists)
     return render(request, "list-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
 
 
@@ -162,11 +170,11 @@ def dashboard(request):
     if request.user.is_authenticated:
         url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=f0ec1cf58c705f937e3cd62b5a0e5f14'
         cities = City.objects.all() #return all the cities in the database
-    
+
         if request.method == 'POST': # only true if form is submitted
             form = CityForm(request.POST) # add actual request data to form for processing
             form.save() # will validate and save if validate
-    
+
         form = CityForm()
 
         weather_data = []
@@ -192,7 +200,7 @@ def todo(request):
         return render(request, 'todo.html')
     return HttpResponseRedirect(reverse('home'))
 
-  
+
 def grade_calc(request):
     GradeCalcFormSet = formset_factory(GradeCategoryForm)
     formset = GradeCalcFormSet()
