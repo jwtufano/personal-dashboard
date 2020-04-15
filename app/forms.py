@@ -1,3 +1,4 @@
+from django.forms.formsets import BaseFormSet
 from django.forms import ModelForm, ChoiceField
 from django import forms
 from models.models import TaskItem, TaskList, CHOICES
@@ -39,6 +40,21 @@ class delTaskItem(forms.Form):
 
 
 class GradeCategoryForm(forms.Form):
-    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
-    current_points_earned = forms.IntegerField(min_value=0, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
-    current_points_possible = forms.IntegerField(min_value=0, widget=forms.TextInput(attrs={'class' : 'myfieldclass'}))
+    category_weight = forms.DecimalField(max_value=100, min_value=0, decimal_places=2, required=True, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please enter a weight"})
+    current_points_earned = forms.IntegerField(min_value=0, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please input points earned"})
+    current_points_possible = forms.IntegerField(min_value=0, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please input possible points earned"})
+    total_points_possible = forms.IntegerField(min_value=0, widget=forms.NumberInput(attrs={'class' : 'myfieldclass', 'required': True}), error_messages = {"required": "Please input total possible points"})
+
+class BaseGradeCategoryFormSet(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        
+        weights = []
+        urls = []
+        
+        for form in self.forms:
+            if form.cleaned_data:
+                current_points_earned = form.cleaned_data['current_points_earned']
+                current_points_possible = form.cleaned_data['current_points_possible']
+                total_points_possible = form.cleaned_data['total_points_possible']
