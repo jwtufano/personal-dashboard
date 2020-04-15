@@ -3,12 +3,14 @@
 {% load static %}
 
 {% block content %}
-
+<style>
+	.tab { margin-left: 40px; }
+</style>
+<ul style="list-style-type:disk;">
 {% for list in lists %}
     {% for item in list %}
-        <h4>{{ item }}</h4>
+        <p><li><h4>{{ item }}</h4></li></p>
     {% endfor %}
 {% endfor %}
-
+</ul>
 {% endblock content %}
-
