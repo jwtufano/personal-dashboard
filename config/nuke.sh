@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo Removing Migrations
+rm -rf models/migrations/*
+touch models/migrations/__init__.py
+
 echo Dropping the Database
 psql -c "DROP DATABASE pdnj;"
 
