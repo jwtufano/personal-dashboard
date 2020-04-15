@@ -178,7 +178,7 @@ def dashboard(request):
                 item = City()
                 item.name = form.cleaned_data['name']
                 prof = Profile.objects.get(user=request.user)
-                item.user = prof
+                item.city_user = prof
                 item.save()
 
         form = CityForm()
