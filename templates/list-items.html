@@ -1,0 +1,14 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% for list in lists %}
+    {% for item in list %}
+        <h4>{{ item }}</h4>
+    {% endfor %}
+{% endfor %}
+
+{% endblock content %}
+

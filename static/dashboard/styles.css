@@ -107,8 +107,14 @@ address {
 }
 
 ol,
-ul,
 dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ul {
+  height: 100%;
+  padding: 0px 5px 0px 20px;
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -10211,4 +10217,53 @@ body {
 }
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
+}
+.myfieldclass {
+  margin: 10px;
+  margin-top: 5px;
+}
+
+.calendar {
+  width: 100%;
+  margin: auto;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.calendar tr, 
+.calendar td {
+  border: 1.5px solid gray;
+}
+
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  width: 160px;
+  height: 120px;
+  padding: 5px 0px 0px 5px;
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date {
+  color: black;
+  font-size: 16px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clearfix {
+  margin-bottom: 15px;
 }

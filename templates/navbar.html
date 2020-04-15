@@ -8,13 +8,15 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Personal Dashboard</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'dashboard/weather.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'dashboard/styles.css' %}">
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="{% url 'dashboard:dashboard'%}">Personal Dashboard</a>
+            <a class="navbar-brand" href="{% url 'dashboard:dashboard'%}">Personal Dashboard</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item dropdown">
@@ -45,12 +47,12 @@
                                 ><div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                                 To-Do List</a
                             >
-                            <a class="nav-link" href="{% url 'dashboard:dashboard'%}"
+                            <a class="nav-link" href="{% url 'dashboard:calendar'%}"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Calendar</a
                             >
                             <div class="sb-sidenav-menu-heading">Other</div>
-                            <a class="nav-link" href="{% url 'dashboard:dashboard'%}"
+                            <a class="nav-link" href="#"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                                 Settings</a
                             >
@@ -81,11 +83,14 @@
                 </footer>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+        <script src="{% static 'dashboard/js/scripts.js' %}"></script>
     </body>
 </html>

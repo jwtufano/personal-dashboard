@@ -1,0 +1,11 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block title %}To Do Lists{% endblock %}
+
+{% block content %}
+{% for list in task_list %}
+    <h4>{{ list }}</h4>
+{% endfor %}
+{% endblock content %}

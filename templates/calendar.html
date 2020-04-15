@@ -1,0 +1,17 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="clearfix">
+                <a class="btn btn-primary left" style='margin-top: 15px;' href="?{{ prev_month }}"> < Previous Month </a>
+                <a class="btn btn-primary right" style='margin-top: 15px;' href="?{{ next_month }}"> Next Month > </a>
+            </div>
+            {% autoescape off %}{{ calendar }}{% endautoescape %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
