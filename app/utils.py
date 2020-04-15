@@ -9,10 +9,14 @@ class Calendar(HTMLCalendar):
         super(Calendar, self).__init__()
 
     def formatday(self, day, events):
-        events_per_day = events.filter(task_due_date__day=day)
+        events_per_day_todo = events.filter(task_due_date__day=day, task_completion=False)
+        events_per_day_complete = events.filter(task_due_date__day=day, task_completion=True)
         d = ''
-        for event in events_per_day:
+        for event in events_per_day_todo:
             d += f'<li> {event.task_name} </li>'
+
+        for event in events_per_day_complete:
+            d += f'<li style=\'color: black\'> {event.task_name} </li>'
 
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"

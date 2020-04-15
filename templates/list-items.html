@@ -17,7 +17,8 @@
                     <div class="card-body">
                         <form role="form" method="POST" action='{% url 'dashboard:complete' pk=item.id %}'>
                         {% csrf_token %}
-                        <button type='submit'>{{ item }}</button>
+                        <p style='display: inline-block;'>{{item}}</p>
+                        <button style='display: inline-block;'type='submit'>Complete</button>
                     </div>
                     {% if forloop.last %}
                         <div class="card-body">
