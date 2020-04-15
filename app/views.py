@@ -65,7 +65,11 @@ def update_list(request):
         data = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
         form = TaskListForm(request.POST, initial=data)
         if form.is_valid():
-            form.save()
+            item = TaskList()
+            item.task_list_name = form.cleaned_data['task_list_name']
+            item.task_list_description = form.cleaned_data['task_list_description']
+            item.task_user = request.user
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:todo"))
     else:
         form = TaskListForm()
