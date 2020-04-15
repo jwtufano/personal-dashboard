@@ -37,10 +37,11 @@ def next_month(d):
 
 def make_calendar(request):
     if request.user.is_authenticated:
+        prof = Profile.objects.get(user=request.user)
         d = get_date(request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
         cal.setfirstweekday(6)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(withyear=True, user=prof)
         context = {'calendar' : mark_safe(html_cal), 'prev_month' : prev_month(d), 'next_month' : next_month(d)}
         return render(request, 'calendar.html', context)
     return HttpResponseRedirect(reverse('home'))
@@ -238,15 +239,68 @@ def grade_calc(request):
         formset = GradeCalcFormSet(request.POST)
         if formset.is_valid():
             grade = Decimal(0)
+            percentage_total_points_given = Decimal(0)
+            total_weight = Decimal(0)
             for form in formset:
-                grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/form.cleaned_data['current_points_possible'])
+                if form.is_valid():
+                    grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['current_points_possible']))
+                    percentage_total_points_given += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['total_points_possible']))
+                    total_weight += form.cleaned_data['category_weight']
             grade = round(grade, 2)
+            show_grade_table = not (percentage_total_points_given < 100.1 and percentage_total_points_given > 99.9)
+            if show_grade_table:
+                grade_for_98 = round(max((9800-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_93 = round(max((9300-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_90 = round(max((9000-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_88 = round(max((8800-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_83 = round(max((8300-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_80 = round(max((8000-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_78 = round(max((7800-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_73 = round(max((7300-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_70 = round(max((7000-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_68 = round(max((6800-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_63 = round(max((6300-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+                grade_for_60 = round(max((6000-(grade*percentage_total_points_given))/(100-percentage_total_points_given), 0), 2)
+            else:
+                grade_for_98 = round(0, 2)
+                grade_for_93 = round(0, 2)
+                grade_for_90 = round(0, 2)
+                grade_for_88 = round(0, 2)
+                grade_for_83 = round(0, 2)
+                grade_for_80 = round(0, 2)
+                grade_for_78 = round(0, 2)
+                grade_for_73 = round(0, 2)
+                grade_for_70 = round(0, 2)
+                grade_for_68 = round(0, 2)
+                grade_for_63 = round(0, 2)
+                grade_for_60 = round(0, 2)
 
-            context = {
-                'grade': grade,
-            }
+            if total_weight < 100.1 and total_weight > 99.9:
+                context = {
+                    'grade': grade,
+                    'grade_for_98': grade_for_98,
+                    'grade_for_93': grade_for_93,
+                    'grade_for_90': grade_for_90,
+                    'grade_for_88': grade_for_88,
+                    'grade_for_83': grade_for_83,
+                    'grade_for_80': grade_for_80,
+                    'grade_for_78': grade_for_78,
+                    'grade_for_73': grade_for_73,
+                    'grade_for_70': grade_for_70,
+                    'grade_for_68': grade_for_68,
+                    'grade_for_63': grade_for_63,
+                    'grade_for_60': grade_for_60,
+                    'show_grade_table': show_grade_table,
+                }
 
-            return render(request, 'grade_calc_results.html', context)
+                return render(request, 'grade_calc_results.html', context)
+            else:
+                context = {
+                    'formset': formset,
+                    'total_weight': total_weight,
+                }
+
+                return render(request, 'grade_calc.html', context)
 
     context = {
         'formset': formset,

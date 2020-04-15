@@ -5,10 +5,17 @@
 {% block title %}Grade Calculator{% endblock %}
 
 {% block content %}
+
+{% if total_weight %}
+    <div class="alert alert-danger">
+        <strong>Total weight must equal 100.</strong>
+    </div>
+{% endif %}
+
 <div class="container-fluid">
     <h1 class="mt-4">Grade Calculation</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Calculate your overall grade in a class</li>
+        <li class="breadcrumb-item active">Calculate your overall grade in a class, and see what grade you need to meet standard grade thresholds</li>
     </ol>
     <div class="row">
         <div class="col-xl-12">
@@ -22,7 +29,7 @@
                     
                         {% for form in formset %}
                             <div class="grade-category-formset">
-                                {{ form.as_table }}
+                                {{ form }}
                             </div>
                         {% endfor %}
                     

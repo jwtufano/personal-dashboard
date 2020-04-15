@@ -4,7 +4,79 @@
 
 {% block content %}
 
-<p>Your grade is: {{ grade }}%</p>
-<a href="{% url 'dashboard:grade_calc'%}">Calculate another grade</a>
+<div class="container-fluid">
+    <h1 class="mt-4">Grade Calculation</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Calculate your overall grade in a class, and see what grade you need to meet standard grade thresholds</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Grade Data</div>
+                <div class="card-body">
+                    <p>Your current grade is: {{ grade }}%</p>
 
+                    {% if show_grade_table %}
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Grade Desired</th>
+                                <th>Grade Needed</th>
+                            </tr>
+                            <tr>
+                                <td>A+ (98-100)</td>
+                                <td>{{ grade_for_98 }}</td>
+                            </tr>
+                            <tr>
+                                <td>A (93-98)</td>
+                                <td>{{ grade_for_93 }}</td>
+                            </tr>
+                            <tr>
+                                <td>A- (90-93)</td>
+                                <td>{{ grade_for_90 }}</td>
+                            </tr>
+                            <tr>
+                                <td>B+ (88-90)</td>
+                                <td>{{ grade_for_88 }}</td>
+                            </tr>
+                            <tr>
+                                <td>B (83-88)</td>
+                                <td>{{ grade_for_83 }}</td>
+                            </tr>
+                            <tr>
+                                <td>B- (80-83)</td>
+                                <td>{{ grade_for_80 }}</td>
+                            </tr>
+                            <tr>
+                                <td>C+ (78-80)</td>
+                                <td>{{ grade_for_78 }}</td>
+                            </tr>
+                            <tr>
+                                <td>C (73-78)</td>
+                                <td>{{ grade_for_73 }}</td>
+                            </tr>
+                            <tr>
+                                <td>C- (70-73)</td>
+                                <td>{{ grade_for_70 }}</td>
+                            </tr>
+                            <tr>
+                                <td>D+ (68-70)</td>
+                                <td>{{ grade_for_68 }}</td>
+                            </tr>
+                            <tr>
+                                <td>D (63-68)</td>
+                                <td>{{ grade_for_63 }}</td>
+                            </tr>
+                            <tr>
+                                <td>D- (60-63)</td>
+                                <td>{{ grade_for_60 }}</td>
+                            </tr>
+                        </table>
+                    {% endif %}
+
+                    <p><a href="{% url 'dashboard:grade_calc'%}" class="btn btn-primary" style="margin-top: 10px;">Calculate another grade</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
-from models.models import TaskItem
+from models.models import *
 
 class Calendar(HTMLCalendar):
     def __init__(self, year=None, month=None):
@@ -24,8 +24,8 @@ class Calendar(HTMLCalendar):
             week += self.formatday(d, events)
         return f'<tr> {week} </tr>'
 
-    def formatmonth(self, withyear=True):
-        events = TaskItem.objects.filter(task_due_date__year=self.year, task_due_date__month=self.month)
+    def formatmonth(self, withyear=True, user=None):
+        events = TaskItem.objects.filter(task_due_date__year=self.year, task_due_date__month=self.month, task_list__task_user=user)
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
