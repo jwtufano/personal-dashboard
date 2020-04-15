@@ -52,6 +52,8 @@ def create_list(request):
             item = TaskList()
             item.task_list_name = form.cleaned_data['task_list_name']
             item.task_list_description = form.cleaned_data['task_list_description']
+            item.task_user = request.user
+            item.save()
             return HttpResponseRedirect(reverse("dashboard:dashboard"))
     else:
         form = TaskListForm()
@@ -82,7 +84,7 @@ def delete_list(request):
 
 def list_lists(request):
     try:
-        task_list = list(TaskList.objects.all())
+        task_list = list(TaskList.objects.filter(task_user=request.user))
     except TaskList.DoesNotExist:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
     return render(request, "list-lists.html", {"task_list": task_list})
@@ -155,7 +157,6 @@ def list_items(request):
         for item in why:
             helper.append(item)
         lists.append(helper)
-    print(lists)
     return render(request, "list-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
 
 

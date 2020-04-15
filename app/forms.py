@@ -3,10 +3,9 @@ from django import forms
 from models.models import TaskItem, TaskList, CHOICES
 import datetime
 
-class TaskListForm(ModelForm):
-    class Meta:
-        model = TaskList
-        fields = ['task_list_name', 'task_list_description']
+class TaskListForm(forms.Form):
+    task_list_name = forms.CharField(max_length=100, required=True)
+    task_list_description = forms.CharField(max_length=100, required=True)
 
 
 class TaskItemForm(forms.Form):
