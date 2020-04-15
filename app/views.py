@@ -162,9 +162,32 @@ def list_items(request):
         helper.append(task_list)
         why = list(TaskItem.objects.filter(task_list=task_list))
         for item in why:
-            helper.append(item)
+            if not item.task_completion:
+                helper.append(item)
         lists.append(helper)
     return render(request, "list-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
+
+
+def list_completed_items(request):
+    # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
+    try:
+        items = TaskItem.objects.all()
+    except TaskList.DoesNotExist:
+        return HttpResponseRedirect(reverse("dashboard:todo"))
+    task_lists = []
+    for item in items:
+        if item.task_list not in task_lists:
+            task_lists.append(item.task_list)
+    lists = []
+    for task_list in task_lists:
+        helper = []
+        helper.append(task_list)
+        why = list(TaskItem.objects.filter(task_list=task_list))
+        for item in why:
+            if item.task_completion:
+                helper.append(item)
+        lists.append(helper)
+    return render(request, "list-completed-items.html", {"items": items, "lists": lists, "task_lists": task_lists})
 
 
 def dashboard(request):
@@ -287,3 +310,10 @@ def grade_calc(request):
 
 def grade_calc_results(request):
     pass
+
+
+def complete(request, pk):
+    item = TaskItem.objects.get(id=pk)
+    item.task_completion = not item.task_completion
+    item.save()
+    return HttpResponseRedirect(reverse("dashboard:view_items"))
