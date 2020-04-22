@@ -100,7 +100,7 @@ def list_lists(request):
 def create_item(request):
     prof = Profile.objects.get(user=request.user)
     if request.method == "POST":
-        form = TaskItemForm(request.POST, prof)
+        form = TaskItemForm(prof, request.POST)
         if form.is_valid():
             item = TaskItem()
             item.task_name = form.cleaned_data['task_name']

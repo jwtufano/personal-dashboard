@@ -11,7 +11,8 @@ class TaskListForm(forms.Form):
 
 class TaskItemForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
-        super(TaskItemForm, self).__init__(*args, **kwargs)
+        user = user
+        super().__init__(*args, **kwargs)
         self.fields['task_list'] = forms.ModelChoiceField(queryset=TaskList.objects.filter(task_user=user), error_messages = {"required": "Please choose a List"})
 
     task_name = forms.CharField(max_length=100, required=True)
