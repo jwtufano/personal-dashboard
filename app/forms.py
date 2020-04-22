@@ -3,7 +3,7 @@ from django.forms import ModelForm, ChoiceField
 from django import forms
 from models.models import TaskItem, TaskList, CHOICES
 import datetime
-
+from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 class TaskListForm(forms.Form):
     task_list_name = forms.CharField(max_length=100, required=True)
     task_list_description = forms.CharField(max_length=100, required=True)
@@ -20,17 +20,40 @@ class TaskItemForm(forms.Form):
     task_created_date = forms.DateTimeField(
         required = True,
         initial=datetime.datetime.now(),
-        error_messages={
-            "required": "Please enter a valid date.",
-            "invalid": "Please enter a valid Created date",
-        })
+        widget=DateTimePicker(
+            options={
+                'useCurrent': True,
+                'collapse': False,
+                'format' : "YYYY-MM-DD HH:mm",
+                # Calendar and time widget formatting
+                'time': 'fas fa-clock',
+                'date': 'fas fa-calendar',
+                'clear': 'fas fa-delete',
+            },
+            attrs={
+                'append': 'fas fa-calendar',
+                'icon_toggle': True,
+            }
+        ),
+    )
     task_due_date = forms.DateTimeField(
         required = True,
         initial=datetime.datetime.now(),
-        error_messages={
-            "required": "Please enter a valid date.",
-            "invalid": "Please enter a valid Due date",
-        })
+        widget=DateTimePicker(
+            options={
+                'useCurrent': True,
+                'collapse': True,
+                'format' : "YYYY-MM-DD HH:mm",
+                'time': 'fas fa-clock',
+                'date': 'fas fa-calendar',
+                'clear': 'fas fa-delete',
+            },
+            attrs={
+                'append': 'fas fa-calendar',
+                'icon_toggle': True,
+            }
+        ),
+    )
     task_priority = forms.ChoiceField(choices=CHOICES)
     task_completion = forms.BooleanField(required=False)
 
