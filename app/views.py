@@ -248,7 +248,7 @@ def grade_calc(request):
             for form in formset:
                 if form.is_valid():
                     grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['current_points_possible']))
-                    percentage_total_points_given += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['total_points_possible']))
+                    percentage_total_points_given += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_possible']/Decimal(form.cleaned_data['total_points_possible']))
                     total_weight += form.cleaned_data['category_weight']
             grade = round(grade, 2)
             show_grade_table = not (percentage_total_points_given < 100.1 and percentage_total_points_given > 99.9)

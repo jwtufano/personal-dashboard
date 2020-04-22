@@ -89,15 +89,15 @@ class todo_list_test(TestCase):
         response = self.client.get('/dashboard/view_list')
         self.assertEqual(response.status_code, 404)
 
-class grade_calc_test(TestCase):
+class grade_calc_form_test(TestCase):
     def setUp(self):
         self.client = Client()
-        self.test_user = get_user_model().objects.get_or_create(username="test_user", password="password")[0]
+        user = get_user_model()
+        self.test_user = user.objects.get_or_create(username="test_user", password="password")[0]
         self.client.force_login(self.test_user)
 
     def form_data(self, weight, earned, possible, total):
         return GradeCategoryForm(
-            user=self.test_user,
             data={
                 'category_weight': weight,
                 'current_points_earned': earned,
@@ -106,14 +106,103 @@ class grade_calc_test(TestCase):
             }
         )
 
-    def test_get_grade_calc_authenticated(self):
-        response = self.client.get('/dashboard/grade_calc/')
-        self.assertTemplateUsed(response, 'grade_calc.html')
-
     def test_valid_grade_category_form(self):
         form = self.form_data(20, 30, 50, 100)
         self.assertTrue(form.is_valid())
 
     def test_grade_category_form_missing_weight(self):
         form = self.form_data("", 30, 50, 100)
+        self.assertFalse(form.is_valid())
+
+    def test_grade_category_form_missing_earned(self):
+        form = self.form_data(20, "", 50, 100)
+        self.assertFalse(form.is_valid())
+
+    def test_grade_category_form_missing_possible(self):
+        form = self.form_data(20, 30, "", 100)
+        self.assertFalse(form.is_valid())
+
+    def test_grade_category_form_missing_total(self):
+        form = self.form_data(20, 30, 50, "")
+        self.assertFalse(form.is_valid())
         
+class grade_calc_view_test(TestCase):
+    def setUp(self):
+        self.client = Client()
+        user = get_user_model()
+        self.test_user = user.objects.get_or_create(username="test_user", password="password")[0]
+        self.client.force_login(self.test_user)
+
+    def test_get_grade_calc_results_authenticated_valid_weight_total(self):
+        response = self.client.post(
+            '/dashboard/grade_calc/',
+            data={
+                'form-TOTAL_FORMS': 2,
+                'form-INITIAL_FORMS': 0,
+                'form-0-category_weight': 30,
+                'form-0-current_points_earned': 30,
+                'form-0-current_points_possible': 50,
+                'form-0-total_points_possible': 100,
+                'form-1-category_weight': 70,
+                'form-1-current_points_earned': 30,
+                'form-1-current_points_possible': 50,
+                'form-1-total_points_possible': 100,
+            },
+        )
+        self.assertTemplateUsed(response, 'grade_calc_results.html')
+
+    def test_get_grade_calc_results_authenticated_invalid_weight_total_1(self):
+        response = self.client.post(
+            '/dashboard/grade_calc/',
+            data={
+                'form-TOTAL_FORMS': 2,
+                'form-INITIAL_FORMS': 0,
+                'form-0-category_weight': 50,
+                'form-0-current_points_earned': 30,
+                'form-0-current_points_possible': 50,
+                'form-0-total_points_possible': 100,
+                'form-1-category_weight': 49,
+                'form-1-current_points_earned': 30,
+                'form-1-current_points_possible': 50,
+                'form-1-total_points_possible': 100,
+            },
+        )
+        self.assertTemplateNotUsed(response, 'grade_calc_results.html')
+
+    def test_get_grade_calc_results_authenticated_invalid_weight_total_2(self):
+        response = self.client.post(
+            '/dashboard/grade_calc/',
+            data={
+                'form-TOTAL_FORMS': 2,
+                'form-INITIAL_FORMS': 0,
+                'form-0-category_weight': 50,
+                'form-0-current_points_earned': 30,
+                'form-0-current_points_possible': 50,
+                'form-0-total_points_possible': 100,
+                'form-1-category_weight': 51,
+                'form-1-current_points_earned': 30,
+                'form-1-current_points_possible': 50,
+                'form-1-total_points_possible': 100,
+            },
+        )
+        self.assertTemplateNotUsed(response, 'grade_calc_results.html')
+
+    def test_get_grade_calc_results_authenticated_all_points_given(self):
+        response = self.client.post(
+            '/dashboard/grade_calc/',
+            data={
+                'form-TOTAL_FORMS': 2,
+                'form-INITIAL_FORMS': 0,
+                'form-0-category_weight': 50,
+                'form-0-current_points_earned': 30,
+                'form-0-current_points_possible': 100,
+                'form-0-total_points_possible': 100,
+                'form-1-category_weight': 50,
+                'form-1-current_points_earned': 30,
+                'form-1-current_points_possible': 100,
+                'form-1-total_points_possible': 100,
+            },
+        )
+        self.assertFalse(response.context['show_grade_table'])
+
+    
