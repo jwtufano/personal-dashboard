@@ -2,7 +2,7 @@ from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
 from unittest.mock import patch
 from models.models import *
-
+from .forms import *
 
 # Create your tests here.
 class todo_list_test(TestCase):
@@ -88,3 +88,32 @@ class todo_list_test(TestCase):
     def test_invalid(self):
         response = self.client.get('/dashboard/view_list')
         self.assertEqual(response.status_code, 404)
+
+class grade_calc_test(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.test_user = get_user_model().objects.get_or_create(username="test_user", password="password")[0]
+        self.client.force_login(self.test_user)
+
+    def form_data(self, weight, earned, possible, total):
+        return GradeCategoryForm(
+            user=self.test_user,
+            data={
+                'category_weight': weight,
+                'current_points_earned': earned,
+                'current_points_possible': possible,
+                'total_points_possible': total,
+            }
+        )
+
+    def test_get_grade_calc_authenticated(self):
+        response = self.client.get('/dashboard/grade_calc/')
+        self.assertTemplateUsed(response, 'grade_calc.html')
+
+    def test_valid_grade_category_form(self):
+        form = self.form_data(20, 30, 50, 100)
+        self.assertTrue(form.is_valid())
+
+    def test_grade_category_form_missing_weight(self):
+        form = self.form_data("", 30, 50, 100)
+        
