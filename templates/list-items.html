@@ -21,14 +21,14 @@
                             <p style='display: inline-block;'>{{item}}</p>
                             <button class="btn btn-outline-primary btn-sm" style='display: inline-block; margin-left: 15px;' type='submit'>Mark Complete</button>
                     {% else %}
-                            <hr/>
+                            <hr style='margin-top: 3px;'/>
                             <form role="form" method="POST" action='{% url 'dashboard:complete' pk=item.id %}'>
                             {% csrf_token %}
                             <p style='display: inline-block;'>{{item}}</p>
                             <button class="btn btn-outline-primary btn-sm" style='display: inline-block; margin-left: 15px;' type='submit'>Mark Complete</button>
                     {% endif %}
                     {% if forloop.last %}
-                            <hr/>
+                            <hr style='margin-top: 3px;'/>
                             <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to List</a>
                         </div>
                     {% endif %}
