@@ -23,10 +23,9 @@ class TaskItemForm(forms.Form):
         widget=DateTimePicker(
             options={
                 'useCurrent': True,
-                'collapse': False,
+                'collapse': True,
                 'format' : "YYYY-MM-DD HH:mm",
                 # Calendar and time widget formatting
-                'time': 'fas fa-clock',
                 'date': 'fas fa-calendar',
                 'clear': 'fas fa-delete',
             },
@@ -44,7 +43,6 @@ class TaskItemForm(forms.Form):
                 'useCurrent': True,
                 'collapse': True,
                 'format' : "YYYY-MM-DD HH:mm",
-                'time': 'fas fa-clock',
                 'date': 'fas fa-calendar',
                 'clear': 'fas fa-delete',
             },
