@@ -315,9 +315,14 @@ def grade_calc(request):
 def grade_calc_results(request):
     pass
 
-
-def complete(request, pk):
-    item = TaskItem.objects.get(id=pk)
+def complete(request, task_id):
+    item = TaskItem.objects.get(id=task_id)
     item.task_completion = not item.task_completion
     item.save()
     return HttpResponseRedirect(reverse("dashboard:view_items"))
+
+def uncomplete(request, task_id):
+    item = TaskItem.objects.get(id=task_id)
+    item.task_completion = not item.task_completion
+    item.save()
+    return HttpResponseRedirect(reverse("dashboard:view_completed_items"))

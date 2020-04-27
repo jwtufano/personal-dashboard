@@ -19,7 +19,8 @@ urlpatterns = [
     path("grade_calc/", views.grade_calc, name="grade_calc"),
     path("grade_calc/results/", views.grade_calc_results, name="grade_calc_results"),
     path("calendar/", views.make_calendar, name="calendar"),
-    path("complete/<int:pk>/", views.complete, name="complete"),
+    path("complete/<int:task_id>/", views.complete, name="complete"),
+    path("uncomplete/<int:task_id>/", views.uncomplete, name="uncomplete"),
     path("delete_list/", views.delete_list, name="delete_list"),
     path("delete_item/", views.delete_item, name="delete_item"),
 ]

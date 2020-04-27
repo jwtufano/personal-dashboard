@@ -14,12 +14,18 @@
                 {% if forloop.counter == 1 %}
                     <div class="card-header"><i class="fas fa-chart-area mr-1"></i>{{ item }}</div>
                 {% else %}
-                    <div class="card-body">
-                        <form role="form" method="POST" action='{% url 'dashboard:complete' pk=item.id %}'>
-                        {% csrf_token %}
-                        <p style='display: inline-block;'>{{item}}</p>
-                        <button class="btn btn-outline-primary btn-sm" style='display: inline-block; margin-left: 15px;' type='submit'>Mark as Incomplete</button>
-                    </div>
+                    {% if forloop.counter == 2 %}
+                        <div class="card-body">
+                            <p style='display: inline-block;'>{{item}}</p>
+                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px;"/></a>
+                    {% else %}
+                            <hr style='margin-top: 3px;'/>
+                            <p style='display: inline-block;'>{{item}}</p>
+                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px;"/></a>
+                    {% endif %}
+                    {% if forloop.last %}
+                        </div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
