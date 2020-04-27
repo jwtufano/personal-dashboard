@@ -45,6 +45,13 @@
                                     </p>
                                 </div>
                             </div>
+                            <div class="media-right">
+                                <div class="content">
+                                    <p>
+                                        <a href="{% url 'dashboard:delete_city' weather.city.id %}"><input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" style="margin-left: 15px; margin-bottom: 5px;"/></a>
+                                    </p>
+                                </div>
+                            </div>
                         </article>
                     </div>
                     {% endfor %}

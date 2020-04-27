@@ -78,14 +78,12 @@ def update_list(request, ):
     return render(request, "create_list_form.html", {"form": form})
 
 
-def delete_list(request):
-    if request.method == "POST":
-        if 'delete' in request.POST:
-            item = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
-            if item:
-                item.delete()
-                return HttpResponseRedirect(reverse("dashboard:todo"))
-    return HttpResponseRedirect(reverse("dashboard:dashboard"))
+def delete_list(request, task_list_id):
+    prof = Profile.objects.get(user=request.user)
+    task_lists = TaskList.objects.filter(task_user=prof)
+    task_list = task_lists.get(id=task_list_id)
+    task_list.delete()
+    return HttpResponseRedirect(reverse("dashboard:view_lists"))
 
 
 def list_lists(request):
@@ -237,7 +235,8 @@ def grade_calc(request):
             total_weight = Decimal(0)
             for form in formset:
                 if form.is_valid():
-                    grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['current_points_possible']))
+                    if (form.cleaned_data['current_points_possible'] > 0):
+                        grade += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_earned']/Decimal(form.cleaned_data['current_points_possible']))
                     percentage_total_points_given += form.cleaned_data['category_weight']*Decimal(form.cleaned_data['current_points_possible']/Decimal(form.cleaned_data['total_points_possible']))
                     total_weight += form.cleaned_data['category_weight']
             grade = round(grade, 2)
@@ -334,3 +333,10 @@ def delete_completed_item(request, task_id):
     item = items.get(id=task_id)
     item.delete()
     return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
+
+def delete_city(request, city_id):
+    prof = Profile.objects.get(user=request.user)
+    cities = City.objects.filter(city_user=prof)
+    city = cities.get(id=city_id)
+    city.delete()
+    return HttpResponseRedirect(reverse("dashboard:dashboard"))

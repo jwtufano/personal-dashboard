@@ -16,6 +16,7 @@
             <div class="card-body">
                 <a class="btn btn-secondary" href="{% url 'dashboard:view_items'%}">View Items</a>
                 <a class="btn btn-secondary" href="{% url 'dashboard:create_item'%}">Add an Item to a List</a>
+                <a href="{% url 'dashboard:delete_list' list.id %}"><input type="submit" class="btn btn-outline-danger btn-sm right" value="Delete" style="margin-left: 15px; margin-bottom: 5px;"/></a>
             </div>
         </div>
     {% endfor %}

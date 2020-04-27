@@ -23,8 +23,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
                     </div>
                 </li>
@@ -52,11 +50,7 @@
                                 ><div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
                                 Calendar</a
                             >
-                            <div class="sb-sidenav-menu-heading">Other</div>
-                            <a class="nav-link" href="#"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                                Settings</a
-                            >
+                            
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
