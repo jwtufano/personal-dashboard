@@ -2,9 +2,13 @@
 
 {% load static %}
 
-{% block title %}Grade Calculator{% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+
+<style>
+    input {max-width: 6em};
+</style>
 
 {% if total_weight %}
     <div class="alert alert-danger">
