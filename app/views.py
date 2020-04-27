@@ -335,3 +335,10 @@ def delete_completed_item(request, task_id):
     item = items.get(id=task_id)
     item.delete()
     return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
+
+def delete_city(request, city_id):
+    prof = Profile.objects.get(user=request.user)
+    cities = City.objects.filter(city_user=prof)
+    city = cities.get(id=city_id)
+    city.delete()
+    return HttpResponseRedirect(reverse("dashboard:dashboard"))

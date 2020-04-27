@@ -24,4 +24,5 @@ urlpatterns = [
     path("delete_item/<int:task_id>/", views.delete_item, name="delete_item"),
     path("delete_completed_item/<int:task_id>/", views.delete_completed_item, name="delete_completed_item"),
     path("delete_list/", views.delete_list, name="delete_list"),
+    path("delete_city/<int:city_id>/", views.delete_city, name="delete_city"),
 ]
