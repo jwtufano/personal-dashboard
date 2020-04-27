@@ -14,7 +14,11 @@
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Grade Data</div>
                 <div class="card-body">
-                    <p>Your current grade is: {{ grade }}%</p>
+                    {% if show_grade_table %}
+                        <p>Your current grade is: {{ grade }}%</p>
+                    {% else %}
+                        <p>Your final grade is: {{ grade }}%</p>
+                    {% endif %}
 
                     {% if show_grade_table %}
                         <table class="table table-bordered">
