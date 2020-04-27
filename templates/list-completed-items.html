@@ -16,14 +16,14 @@
                 {% else %}
                     {% if forloop.counter == 2 %}
                         <div class="card-body">
-                            <p style='display: inline-block;'>{{item}}</p>
-                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px;"/></a>
-                            <a href="{% url 'dashboard:delete_completed_item' item.id %}"><input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" style="display: inline-block; margin-left: 15px;"/></a>
+                            <h5 style="display: inline-block;">{{item}}</h5>
+                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px; margin-bottom: 5px;"/></a>
+                            <a href="{% url 'dashboard:delete_completed_item' item.id %}"><input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" style="margin-left: 15px; margin-bottom: 5px;"/></a></br>
                     {% else %}
-                            <hr style='margin-top: 3px;'/>
-                            <p style='display: inline-block;'>{{item}}</p>
-                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px;"/></a>
-                            <a href="{% url 'dashboard:delete_completed_item' item.id %}"><input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" style="display: inline-block; margin-left: 15px;"/></a>
+                            <hr style='margin-top: 10px;'/>
+                            <h5 style="display: inline-block;">{{item}}</h5>
+                            <a href="{% url 'dashboard:uncomplete' item.id %}"><input type="submit" class="btn btn-outline-primary btn-sm" value="Mark as Incomplete" style="display: inline-block; margin-left: 15px; margin-bottom: 5px;"/></a>
+                            <a href="{% url 'dashboard:delete_completed_item' item.id %}"><input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" style="margin-left: 15px; margin-bottom: 5px;"/></a></br>
                     {% endif %}
                     {% if forloop.last %}
                         </div>

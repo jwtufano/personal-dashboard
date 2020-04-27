@@ -104,7 +104,7 @@ def create_item(request):
         if form.is_valid():
             item = TaskItem()
             item.task_name = form.cleaned_data['task_name']
-            item.task_description = form.cleaned_data['task_description']
+            item.tast_description = form.cleaned_data['task_description']
             item.task_created_date = form.cleaned_data['task_created_date']
             item.task_due_date = form.cleaned_data['task_due_date']
             item.task_priority = form.cleaned_data['task_priority']
@@ -124,7 +124,7 @@ def update_item(request):
         if form.is_valid():
             item = TaskItem()
             item.task_name = form.cleaned_data['task_name']
-            item.task_description = form.cleaned_data['task_description']
+            item.tast_description = form.cleaned_data['task_description']
             item.task_created_date = form.cleaned_data['task_created_date']
             item.task_due_date = form.cleaned_data['task_due_date']
             item.task_priority = form.cleaned_data['task_priority']

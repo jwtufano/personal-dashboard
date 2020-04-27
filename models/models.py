@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
-CHOICES = [(1, 'low'), (2, 'normal'), (3, 'high')]
+CHOICES = [(1, 'low'), (2, 'medium'), (3, 'high')]
 
 
 class Profile(models.Model):
