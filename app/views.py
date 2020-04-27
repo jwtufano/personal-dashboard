@@ -78,14 +78,12 @@ def update_list(request, ):
     return render(request, "create_list_form.html", {"form": form})
 
 
-def delete_list(request):
-    if request.method == "POST":
-        if 'delete' in request.POST:
-            item = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
-            if item:
-                item.delete()
-                return HttpResponseRedirect(reverse("dashboard:todo"))
-    return HttpResponseRedirect(reverse("dashboard:dashboard"))
+def delete_list(request, task_list_id):
+    prof = Profile.objects.get(user=request.user)
+    task_lists = TaskList.objects.filter(task_user=prof)
+    task_list = task_lists.get(id=task_list_id)
+    task_list.delete()
+    return HttpResponseRedirect(reverse("dashboard:view_lists"))
 
 
 def list_lists(request):
