@@ -21,6 +21,7 @@ urlpatterns = [
     path("calendar/", views.make_calendar, name="calendar"),
     path("complete/<int:task_id>/", views.complete, name="complete"),
     path("uncomplete/<int:task_id>/", views.uncomplete, name="uncomplete"),
+    path("delete_item/<int:task_id>/", views.delete_item, name="delete_item"),
+    path("delete_completed_item/<int:task_id>/", views.delete_completed_item, name="delete_completed_item"),
     path("delete_list/", views.delete_list, name="delete_list"),
-    path("delete_item/", views.delete_item, name="delete_item"),
 ]

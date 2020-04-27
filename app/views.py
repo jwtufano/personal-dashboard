@@ -111,7 +111,7 @@ def create_item(request):
             item.task_completion = form.cleaned_data['task_completion']
             item.task_list = form.cleaned_data['task_list']
             item.save()
-            return HttpResponseRedirect(reverse("dashboard:todo"))
+            return HttpResponseRedirect(reverse("dashboard:view_items"))
     else:
         form = TaskItemForm(prof)
     return render(request, "create_item_form.html", {"form": form})
@@ -135,17 +135,6 @@ def update_item(request):
     else:
         form = TaskItemForm()
     return render(request, "create_item_form.html", {"form": form})
-
-
-def delete_item(request):
-    if request.method == "POST":
-        if 'delete' in request.POST:
-            item = TaskItem.objects.get_object_or_404(task_list_name=request.POST.get("task_name"))
-            if item:
-                item.delete()
-                return HttpResponseRedirect(reverse("dashboard:todo"))
-    return HttpResponseRedirect(reverse("dashboard:dashboard"))
-
 
 def list_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
@@ -325,4 +314,14 @@ def uncomplete(request, task_id):
     item = TaskItem.objects.get(id=task_id)
     item.task_completion = not item.task_completion
     item.save()
+    return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
+
+def delete_item(request, task_id):
+    item = TaskItem.objects.get(id=task_id)
+    item.delete()
+    return HttpResponseRedirect(reverse("dashboard:view_items"))
+
+def delete_completed_item(request, task_id):
+    item = TaskItem.objects.get(id=task_id)
+    item.delete()
     return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
