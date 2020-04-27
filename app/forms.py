@@ -9,6 +9,54 @@ class TaskListForm(forms.Form):
     task_list_description = forms.CharField(max_length=100, required=True)
 
 
+class EditItemForm(forms.Form):
+    def __init__(self, user, instance, *args, **kwargs):
+        user = user
+        instance = instance
+        super().__init__(*args, **kwargs)
+        self.fields['task_name'] = forms.CharField(max_length=100, required=True, initial=instance.task_name)
+        self.fields['task_description'] = forms.CharField(max_length=100, required=True, initial=instance.tast_description)
+        self.fields['task_created_date'] = forms.DateTimeField(label='Previous created date: ' + instance.task_created_date.strftime("%D"),
+                                                                required = True,
+                                                                initial=instance.task_created_date,
+                                                                widget=DateTimePicker(
+                                                                    options={
+                                                                        'useCurrent': True,
+                                                                        'collapse': True,
+                                                                        'format' : "YYYY-MM-DD HH:mm",
+                                                                        # Calendar and time widget formatting
+                                                                        'date': 'fas fa-calendar',
+                                                                        'clear': 'fas fa-delete',
+                                                                    },
+                                                                    attrs={
+                                                                        'append': 'fas fa-calendar',
+                                                                        'icon_toggle': True,
+                                                                    }
+                                                                ),
+                                                            )
+        self.fields['task_due_date'] = forms.DateTimeField(label='Previous due date: ' + instance.task_due_date.strftime("%D"),
+                                                            required = True,
+                                                            initial=instance.task_due_date,
+                                                            widget=DateTimePicker(
+                                                                options={
+                                                                    'useCurrent': True,
+                                                                    'collapse': True,
+                                                                    'format' : "YYYY-MM-DD HH:mm",
+                                                                    'date': 'fas fa-calendar',
+                                                                    'clear': 'fas fa-delete',
+                                                                },
+                                                                attrs={
+                                                                    'append': 'fas fa-calendar',
+                                                                    'icon_toggle': True,
+                                                                }
+                                                            ),
+                                                        )
+        self.fields['task_priority'] = forms.ChoiceField(choices=CHOICES, initial=instance.task_priority)
+        self.fields['task_completion'] = forms.BooleanField(required=False, initial=instance.task_completion)
+        self.fields['task_list'] = forms.ModelChoiceField(queryset=TaskList.objects.filter(task_user=user), 
+                                                            error_messages = {"required": "Please choose a List"},
+                                                            initial = instance.task_list)
+
 class TaskItemForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         user = user

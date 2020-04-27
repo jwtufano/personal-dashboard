@@ -5,7 +5,7 @@ from django.forms.formsets import formset_factory
 import requests
 import calendar
 
-from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm
+from app.forms import TaskItemForm, TaskListForm, GradeCategoryForm, EditItemForm
 from models.models import City
 from weather.forms import CityForm
 from datetime import datetime, timedelta, date
@@ -62,10 +62,10 @@ def create_list(request):
     return render(request, "create_list_form.html", {"form": form})
 
 
-def update_list(request):
+def update_list(request, ):
     if request.method == "POST":
         data = TaskList.objects.get_object_or_404(task_list_name=request.POST.get("task_list_name"))
-        form = TaskListForm(request.POST, initial=data)
+        form = TaskListForm(request.POST, instance=data)
         if form.is_valid():
             item = TaskList()
             item.task_list_name = form.cleaned_data['task_list_name']
@@ -117,12 +117,13 @@ def create_item(request):
     return render(request, "create_item_form.html", {"form": form})
 
 
-def update_item(request):
+def update_item(request, task_id):
+    prof = Profile.objects.get(user=request.user)
+    items = TaskItem.objects.filter(task_list__task_user=prof)
+    item = items.get(id=task_id)
     if request.method == "POST":
-        data = TaskItem.objects.get_object_or_404(task_list_name=request.POST.get("task_name"))
-        form = TaskItemForm(request.POST, initial=data)
+        form = EditItemForm(prof, item, request.POST)
         if form.is_valid():
-            item = TaskItem()
             item.task_name = form.cleaned_data['task_name']
             item.tast_description = form.cleaned_data['task_description']
             item.task_created_date = form.cleaned_data['task_created_date']
@@ -131,10 +132,10 @@ def update_item(request):
             item.task_completion = form.cleaned_data['task_completion']
             item.task_list = form.cleaned_data['task_list']
             item.save()
-            return HttpResponseRedirect(reverse("dashboard:todo"))
+            return HttpResponseRedirect(reverse("dashboard:view_items"))
     else:
-        form = TaskItemForm()
-    return render(request, "create_item_form.html", {"form": form})
+        form = EditItemForm(prof, item)
+    return render(request, "edit_item_form.html", {"form": form, "create_date_initial": item.task_created_date, "due_date_initial": item.task_due_date})
 
 def list_items(request):
     # second parameter for TaskList and return list that is TaskItems.objects.get(TaskList=passed_list)
@@ -306,23 +307,31 @@ def grade_calc_results(request):
     pass
 
 def complete(request, task_id):
-    item = TaskItem.objects.get(id=task_id)
+    prof = Profile.objects.get(user=request.user)
+    items = TaskItem.objects.filter(task_list__task_user=prof)
+    item = items.get(id=task_id)
     item.task_completion = not item.task_completion
     item.save()
     return HttpResponseRedirect(reverse("dashboard:view_items"))
 
 def uncomplete(request, task_id):
-    item = TaskItem.objects.get(id=task_id)
+    prof = Profile.objects.get(user=request.user)
+    items = TaskItem.objects.filter(task_list__task_user=prof)
+    item = items.get(id=task_id)
     item.task_completion = not item.task_completion
     item.save()
     return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
 
 def delete_item(request, task_id):
-    item = TaskItem.objects.get(id=task_id)
+    prof = Profile.objects.get(user=request.user)
+    items = TaskItem.objects.filter(task_list__task_user=prof)
+    item = items.get(id=task_id)
     item.delete()
     return HttpResponseRedirect(reverse("dashboard:view_items"))
 
 def delete_completed_item(request, task_id):
-    item = TaskItem.objects.get(id=task_id)
+    prof = Profile.objects.get(user=request.user)
+    items = TaskItem.objects.filter(task_list__task_user=prof)
+    item = items.get(id=task_id)
     item.delete()
     return HttpResponseRedirect(reverse("dashboard:view_completed_items"))
