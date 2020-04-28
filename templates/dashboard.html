@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-xl-6">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Current Weather</div>
+                <div class="card-header"><i class="fas fa-cloud-sun-rain mr-1"></i>Current Weather</div>
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
@@ -60,7 +60,7 @@
         </div>
         <div class="col-xl-6">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>To-Do List Shortcuts</div>
+                <div class="card-header"><i class="fas fa-tasks mr-1"></i>To-Do List Shortcuts</div>
                 <div class="card-body">
                     <div class="text-center" style="margin-bottom: 10px;">
                         <a class="btn btn-secondary" href="{% url 'dashboard:create_list'%}">Create a To-Do List</a>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Gradebook Shortcuts</div>
+                <div class="card-header"><i class="fas fa-calculator mr-1"></i>Gradebook Shortcuts</div>
                 <div class="card-body">
                     <div class="text-center">
                         <a class="btn btn-secondary" href="{% url 'dashboard:grade_calc'%}">Calculate Your Grade</a>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Calendar Shortcuts</div>
+                <div class="card-header"><i class="fas fa-calendar-alt mr-1"></i>Calendar Shortcuts</div>
                 <div class="card-body">
                     <div class="text-center">
                         <a class="btn btn-secondary" href="{% url 'dashboard:calendar'%}">View This Month's Tasks</a>
