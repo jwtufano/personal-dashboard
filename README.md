@@ -69,3 +69,4 @@ Notable sources used throughout the creation of this project include:
    - The official django documentation
    - Questions asked on StackOverflow
    - Nicole Harris' django formset tutorial
+   - Anthony Herbert's django weather app tutorial
