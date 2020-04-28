@@ -5,14 +5,14 @@
 {% block content %}
 
 <div class="container-fluid">
-    <h1 class="mt-4">Grade Calculation</h1>
+    <h1 class="mt-4">Grade Calculation Results</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Calculate your overall grade in a class, and see what grade you need to meet standard grade thresholds</li>
     </ol>
     <div class="row">
         <div class="col-xl-12">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Grade Data</div>
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Grade Data</div>
                 <div class="card-body">
                     {% if show_grade_table %}
                         <p>Your current grade is: {{ grade }}%</p>
@@ -23,8 +23,8 @@
                     {% if show_grade_table %}
                         <table class="table table-bordered">
                             <tr>
-                                <th>Grade Desired</th>
-                                <th>Grade Needed</th>
+                                <th style='width: 50%;'>Final Grade Desired</th>
+                                <th>Average Grade Needed on Remaining Points Available</th>
                             </tr>
                             <tr>
                                 <td>A+ (98-100)</td>
